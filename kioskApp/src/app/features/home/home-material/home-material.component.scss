@@ -138,6 +138,7 @@
   text-align: left;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
   padding: 16px;
   border-radius: 22px;
   transition: 0.2s;
@@ -148,10 +149,6 @@
 
 .material-service-card {
   box-shadow: none;
-}
-
-.service-card {
-  cursor: pointer;
 }
 
 .service-card.disabled {
@@ -201,7 +198,7 @@
   max-height: none;
   height: 100%;
   overflow: hidden;
-  padding: 0;
+  padding: 0 !important;
 
   iframe {
     width: 100%;
@@ -243,6 +240,12 @@
       font-weight: 500;
     }
   }
+}
+
+.embedded-dialog-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .material-end-session {

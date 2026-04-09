@@ -26,6 +26,7 @@ export class HomeComponentComponent {
   }
 
   readonly services: readonly HomeService[] = [
+    /*
     {
       title: 'Better Rewards',
       subtitle: 'Explore Better Rewards',
@@ -90,7 +91,41 @@ export class HomeComponentComponent {
       link: 'https://www.dischem.co.za/shop-by-department/health-and-wellness',
       external: true
     },
+    */
+    {
+      title: 'Booking and Ticketing',
+      subtitle: 'Get a dispensary ticket or book at the clinic',
+      logo: 'assets/images/logo.png',
+      icon: 'images/Vector.png',
+      link: null,
+      external: true
+    },
+    {
+      title: 'Health Cover',
+      subtitle: 'Discover health plans today',
+      logo: 'assets/images/logo.png',
+      icon: 'images/Vector.png',
+      link: 'https://instoreleads.dischemhealth.co.za',
+      external: true
+    },
+    {
+      title: 'Life Cover',
+      subtitle: 'Discover life insurance options',
+      logo: 'assets/images/logo.png',
+      icon: 'images/Vector.png',
+      link: 'https://www.dischemlife.co.za/i/forms/servicing/?t=caeb611b-7ab3-43db-a578-a3d0402e1ef8',
+      external: true
+    },
+    {
+      title: 'Store Info',
+      subtitle: 'Discover the products you need',
+      logo: 'assets/images/logo.png',
+      icon: 'images/Vector.png',
+      link: null,
+      external: true
+    }
   ];
+  
   readonly promoPoints: readonly PromoPoint[] = [
     {
       highlight: '10% Off',

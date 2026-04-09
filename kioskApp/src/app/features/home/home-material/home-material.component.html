@@ -32,7 +32,7 @@
 
   <div class="card-grid" [class.few]="services.length < 8">
     @for (service of services; track service.title) {
-      <mat-card class="card service-card material-service-card" (click)="service.link && openMaterialModal(service)" [class.disabled]="!service.link">
+      <mat-card class="card service-card material-service-card" (click)="openService(service)" [class.disabled]="isServiceDisabled(service)">
         <div class="card-icon">
           @if (service.icon) {
             <img [src]="service.icon" alt="{{ service.title }} Icon" />
@@ -54,17 +54,49 @@
         <h2>{{ selectedServiceTitle }}</h2>
         <p>Tap "End Session" to return to the kiosk home screen.</p>
       </div>
-      <button mat-flat-button class="material-end-session" type="button" (click)="closeModal()">End Session</button>
+      <div class="embedded-dialog-actions">
+        <button mat-flat-button class="material-end-session" type="button" (click)="confirmEndSession()">End Session</button>
+        <button mat-stroked-button class="material-close-modal" type="button" (click)="closeModal()">X</button>
+      </div>
     </div>
     <mat-dialog-content class="material-dialog-content">
-      @if (selectedServiceUrl) {
-        <iframe
-          [src]="selectedServiceUrl"
-          title="Service Content"
-          loading="eager"
-          referrerpolicy="strict-origin-when-cross-origin">
-        </iframe>
+      @if (isBookingTicketingModal) {
+        <app-booking-ticketing></app-booking-ticketing>
+      } @else if (selectedServiceUrl) {
+        <div class="iframe-container">
+          @if (isIframeLoading) {
+            <div class="iframe-status">
+              <p>Loading service content...</p>
+            </div>
+          }
+          @if (hasIframeLoadError) {
+            <div class="iframe-status iframe-status-error">
+              <p>Unable to load this service in the kiosk window right now.</p>
+              <button mat-flat-button class="material-brand-filled" type="button" (click)="retryIframeLoad()">Retry</button>
+            </div>
+          }
+          <iframe
+            [src]="selectedServiceUrl"
+            title="Service Content"
+            loading="eager"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            (load)="onIframeLoad()"
+            (error)="onIframeError()">
+          </iframe>
+        </div>
       }
     </mat-dialog-content>
   </div>
+</ng-template>
+
+<ng-template #confirmationDialogTemplate let-data>
+  <h2 mat-dialog-title>{{ data.title }}</h2>
+  <mat-dialog-content>
+    <p>{{ data.message }}</p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-stroked-button type="button" [mat-dialog-close]="false">Cancel</button>
+    <button mat-flat-button type="button" class="material-end-session" [mat-dialog-close]="true">End Session</button>
+  </mat-dialog-actions>
 </ng-template>
