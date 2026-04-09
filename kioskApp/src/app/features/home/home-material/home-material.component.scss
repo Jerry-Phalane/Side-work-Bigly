@@ -99,6 +99,7 @@
   display: flex;
   gap: 10px;
   margin-top: 8px;
+  flex-wrap: wrap;
 }
 
 .material-brand-filled {
@@ -106,6 +107,10 @@
   --mdc-filled-button-label-text-color: #ffffff;
   --mdc-filled-button-container-shape: 20px;
   --mdc-filled-button-container-height: 44px;
+  --mdc-filled-button-horizontal-padding: 20px;
+  --mdc-typography-label-large-font-family: 'Montserrat', sans-serif;
+  --mdc-typography-label-large-font-size: 1rem;
+  --mdc-typography-label-large-font-weight: 600;
   border: 2px solid #ffffff;
 }
 
@@ -114,7 +119,12 @@
   --mdc-outlined-button-label-text-color: #060606;
   --mdc-outlined-button-container-shape: 20px;
   --mdc-outlined-button-container-height: 44px;
+  --mdc-outlined-button-horizontal-padding: 20px;
+  --mdc-typography-label-large-font-family: 'Montserrat', sans-serif;
+  --mdc-typography-label-large-font-size: 1rem;
+  --mdc-typography-label-large-font-weight: 600;
   background: #FAFBFA;
+  border: 1px solid #FAFBFA;
 }
 
 .card-grid {

@@ -63,28 +63,12 @@
       @if (isBookingTicketingModal) {
         <app-booking-ticketing></app-booking-ticketing>
       } @else if (selectedServiceUrl) {
-        <div class="iframe-container">
-          @if (isIframeLoading) {
-            <div class="iframe-status">
-              <p>Loading service content...</p>
-            </div>
-          }
-          @if (hasIframeLoadError) {
-            <div class="iframe-status iframe-status-error">
-              <p>Unable to load this service in the kiosk window right now.</p>
-              <button mat-flat-button class="material-brand-filled" type="button" (click)="retryIframeLoad()">Retry</button>
-            </div>
-          }
-          <iframe
-            [src]="selectedServiceUrl"
-            title="Service Content"
-            loading="eager"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-            (load)="onIframeLoad()"
-            (error)="onIframeError()">
-          </iframe>
-        </div>
+        <iframe
+          [src]="selectedServiceUrl"
+          title="Service Content"
+          loading="eager"
+          referrerpolicy="strict-origin-when-cross-origin">
+        </iframe>
       }
     </mat-dialog-content>
   </div>

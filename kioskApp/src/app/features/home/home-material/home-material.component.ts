@@ -101,15 +101,10 @@ export class HomeMaterialComponent {
   readonly services: readonly HomeService[] = HOME_SERVICES;
   readonly promoPoints: readonly PromoPoint[] = PROMO_POINTS;
   readonly dialogSubtitle = 'Tap "End Session" to return to the kiosk home screen.';
-  readonly iframeLoadTimeoutMs = 12000;
 
   selectedServiceTitle = '';
   selectedServiceUrl: SafeResourceUrl | null = null;
-  selectedServiceLink: string | null = null;
   isBookingTicketingModal = false;
-  isIframeLoading = false;
-  hasIframeLoadError = false;
-  private iframeLoadTimeoutId: ReturnType<typeof setTimeout> | null = null;
 
   openService(service: HomeService): void {
     if (this.isBookingAndTicketingService(service)) {
@@ -139,9 +134,7 @@ export class HomeMaterialComponent {
 
     this.selectedServiceTitle = service.title;
     this.selectedServiceUrl = this.sanitizer.bypassSecurityTrustResourceUrl(link);
-    this.selectedServiceLink = link;
     this.isBookingTicketingModal = false;
-    this.startIframeLoadingState();
     this.openDialogTemplate('iframe');
   }
 
@@ -154,34 +147,10 @@ export class HomeMaterialComponent {
   }
 
   closeModal(): void {
-    this.clearIframeLoadTimeout();
     this.materialDialogRef?.close();
     this.selectedServiceTitle = '';
     this.selectedServiceUrl = null;
-    this.selectedServiceLink = null;
     this.isBookingTicketingModal = false;
-    this.isIframeLoading = false;
-    this.hasIframeLoadError = false;
-  }
-
-  onIframeLoad(): void {
-    this.clearIframeLoadTimeout();
-    this.isIframeLoading = false;
-    this.hasIframeLoadError = false;
-  }
-
-  onIframeError(): void {
-    this.clearIframeLoadTimeout();
-    this.isIframeLoading = false;
-    this.hasIframeLoadError = true;
-  }
-
-  retryIframeLoad(): void {
-    if (!this.selectedServiceLink) {
-      return;
-    }
-    this.selectedServiceUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.selectedServiceLink);
-    this.startIframeLoadingState();
   }
 
   confirmEndSession(): void {
@@ -206,7 +175,6 @@ export class HomeMaterialComponent {
     const dialogConfig = dialogType === 'component' ? this.componentDialogConfig : this.iframeDialogConfig;
     this.materialDialogRef = this.materialDialog.open(this.materialDialogTemplate, dialogConfig);
     this.materialDialogRef.afterClosed().subscribe(() => {
-      this.clearIframeLoadTimeout();
       this.materialDialogRef = null;
     });
   }
@@ -233,26 +201,5 @@ export class HomeMaterialComponent {
       }
       this.endSession();
     });
-  }
-
-  private startIframeLoadingState(): void {
-    this.clearIframeLoadTimeout();
-    this.isIframeLoading = true;
-    this.hasIframeLoadError = false;
-    this.iframeLoadTimeoutId = setTimeout(() => {
-      if (!this.isIframeLoading) {
-        return;
-      }
-      this.isIframeLoading = false;
-      this.hasIframeLoadError = true;
-    }, this.iframeLoadTimeoutMs);
-  }
-
-  private clearIframeLoadTimeout(): void {
-    if (!this.iframeLoadTimeoutId) {
-      return;
-    }
-    clearTimeout(this.iframeLoadTimeoutId);
-    this.iframeLoadTimeoutId = null;
   }
 }
