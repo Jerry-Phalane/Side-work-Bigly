@@ -1,0 +1,34 @@
+
+
+@use '../src/app/styles/variables' as *;
+@use '../src/app/styles/buttons' as *;
+@use '../src/app/styles/cards' as *;
+@use '../src/app/styles/mixins' as *;
+@use '@angular/material' as mat;
+
+html, body { height: 100%; }
+html {
+  color-scheme: light;
+  --mat-sys-primary: #02a049;
+  --mat-sys-on-primary: #ffffff;
+  @include mat.theme((
+    color: (
+      theme-type: light,
+      primary: mat.$green-palette,
+      tertiary: mat.$green-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: $background-color;
+}
+
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+@import 'primeicons/primeicons.css';

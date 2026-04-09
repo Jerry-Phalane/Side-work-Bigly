@@ -1,0 +1,189 @@
+@use '../../../styles/mixins' as *;
+@use '../../../styles/variables' as *;
+
+/* Landing page container */
+.landing {
+  position: center;
+  height: 100vh;
+  background: #113206;
+  background: linear-gradient(145deg, rgba(17, 50, 6, 1) 0%, rgba(28, 123, 46, 1) 100%);
+
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* Small top card with logo */
+.brand-card {
+  background-color: $background-color;
+  padding: 20px 36px;
+  border-radius: 18px;
+  margin-top: 90px;
+  margin-bottom: 64px;
+}
+
+/* Main content on background */
+.main-content {
+  color: $text-color-light;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  text-align: center;
+
+  h1 {
+    font-size: 4rem;
+    font-weight: $font-weight-bold;
+    font-family: $font-family;
+  }
+
+  h2 {
+    padding: 24px 36px;
+    font-size: 2.25rem;
+    font-weight: $font-weight-bold;
+    border-radius: 18px;
+    background-color: $secondary-color;
+    color: #113206;
+    margin: 16px 0 32px 0;
+    animation: bounceBtn 2s infinite ease-in-out;
+  }
+
+  p {
+    font-size: 1.50rem;
+    font-weight: 300;
+    font-family: $font-family;
+  }
+}
+
+.floating-icons {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  .icon {
+    position: absolute;
+    font-variation-settings: 'weight' 900;
+    animation: float 7s infinite ease-in-out;
+  }
+
+  .icon:nth-child(1) {
+    top: 10%;
+    left: 15%;
+    font-size: 100px;
+    color: rgba(255, 221, 0, 0.25);
+  }
+
+  .icon:nth-child(2) {
+    top: 25%;
+    left: 80%;
+    font-size: 80px;
+    color: rgba(255, 255, 255, 0.2);
+  }
+
+  .icon:nth-child(3) {
+    top: 60%;
+    left: 20%;
+    font-size: 120px;
+    color: rgba(2, 160, 73, 0.25);
+  }
+
+  .icon:nth-child(4) {
+    top: 75%;
+    left: 70%;
+    font-size: 90px;
+    color: rgba(255, 221, 0, 0.15);
+  }
+
+  .icon:nth-child(5) {
+    top: 40%;
+    left: 50%;
+    font-size: 140px;
+    color: rgba(255, 255, 255, 0.1);
+  }
+
+  .icon:nth-child(6) {
+    top: 85%;
+    left: 30%;
+    font-size: 70px;
+    color: rgba(2, 160, 73, 0.3);
+  }
+
+  .icon:nth-child(7) {
+    top: 15%;
+    left: 60%;
+    font-size: 110px;
+    color: rgba(255, 221, 0, 0.2);
+  }
+
+  .icon:nth-child(8) {
+    top: 55%;
+    left: 85%;
+    font-size: 95px;
+    color: rgba(255, 255, 255, 0.15);
+  }
+
+  .icon:nth-child(1) {
+    opacity: 0.2;
+  }
+
+  .icon:nth-child(3) {
+    opacity: 0.1;
+  }
+
+  .icon:nth-child(5) {
+    opacity: 0.25;
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(15px, -30px) scale(1.1);
+  }
+
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes bounceBtn {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes bounceGround {
+  0% {
+    transform: translateY(0) scaleY(1);
+  }
+
+  20% {
+    transform: translateY(-25px) scaleY(1);
+  }
+
+  40% {
+    transform: translateY(0) scaleY(0.9);
+  }
+
+  50% {
+    transform: translateY(-12px) scaleY(1);
+  }
+
+  70% {
+    transform: translateY(0) scaleY(0.95);
+  }
+
+  100% {
+    transform: translateY(0) scaleY(1);
+  }
+}

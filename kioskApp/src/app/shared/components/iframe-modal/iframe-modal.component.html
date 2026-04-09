@@ -1,0 +1,23 @@
+@if (visible) {
+<div class="iframe-modal-backdrop">
+  <div class="iframe-modal">
+    <div class="iframe-modal-header">
+      <div class="iframe-modal-title-group">
+        <h2>{{ title }}</h2>
+        <p>Tap "End Session" to return to the kiosk home screen.</p>
+      </div>
+      <button class="btn close-btn" type="button" (click)="onClose()">End Session</button>
+    </div>
+    <div class="iframe-modal-body">
+      @if (url) {
+      <iframe
+        [src]="url"
+        title="Service Content"
+        loading="eager"
+        referrerpolicy="strict-origin-when-cross-origin">
+      </iframe>
+      }
+    </div>
+  </div>
+</div>
+}

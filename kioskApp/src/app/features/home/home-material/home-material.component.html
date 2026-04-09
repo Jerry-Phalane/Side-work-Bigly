@@ -1,0 +1,70 @@
+<div class="home">
+  <div class="top-bar">
+    <div class="logo-row">
+      <img (click)="goToInit()" src="images/Group.png" alt="Dis-chem Logo">
+    </div>
+    <div class="top-bar-actions">
+      <button mat-flat-button class="material-brand-filled">Sign In</button>
+      <button mat-stroked-button class="material-brand-outlined">Create Account</button>
+    </div>
+  </div>
+
+  <div class="welcome-section">
+    <h1 class="welcome-text">Welcome to Melrose Arch</h1>
+  </div>
+
+  <div class="promo-card">
+    <div class="promo-left">
+      <img src="images/better-rewards.png" alt="Promo Logo" class="promo-logo">
+    </div>
+    <div class="promo-right">
+      <ul class="promo-points">
+        @for (point of promoPoints; track point.text) {
+          <li><span class="bold">{{ point.highlight }}</span> {{ point.text }}</li>
+        }
+      </ul>
+      <div class="promo-actions">
+        <button mat-flat-button class="material-brand-filled">Sign Up for Free</button>
+        <button mat-stroked-button class="material-brand-outlined">Calculate My Rewards</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-grid" [class.few]="services.length < 8">
+    @for (service of services; track service.title) {
+      <mat-card class="card service-card material-service-card" (click)="service.link && openMaterialModal(service)" [class.disabled]="!service.link">
+        <div class="card-icon">
+          @if (service.icon) {
+            <img [src]="service.icon" alt="{{ service.title }} Icon" />
+          }
+        </div>
+        <h3 class="subheading">{{ service.title }}</h3>
+        <p class="small-text">{{ service.subtitle }}</p>
+      </mat-card>
+    } @empty {
+      <p>No services available</p>
+    }
+  </div>
+</div>
+
+<ng-template #materialDialogTemplate>
+  <div class="embedded-dialog-shell">
+    <div class="embedded-dialog-header">
+      <div class="embedded-dialog-title-group">
+        <h2>{{ selectedServiceTitle }}</h2>
+        <p>Tap "End Session" to return to the kiosk home screen.</p>
+      </div>
+      <button mat-flat-button class="material-end-session" type="button" (click)="closeModal()">End Session</button>
+    </div>
+    <mat-dialog-content class="material-dialog-content">
+      @if (selectedServiceUrl) {
+        <iframe
+          [src]="selectedServiceUrl"
+          title="Service Content"
+          loading="eager"
+          referrerpolicy="strict-origin-when-cross-origin">
+        </iframe>
+      }
+    </mat-dialog-content>
+  </div>
+</ng-template>

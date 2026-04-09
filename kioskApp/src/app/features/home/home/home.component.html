@@ -1,0 +1,76 @@
+<div class="home">
+  <div class="top-bar">
+    <div class="logo-row">
+      <img (click)="goToInit()" src="images/Group.png" alt="Dis-chem Logo">
+    </div>
+
+    <div class="top-bar-actions">
+      <button class="btn secondary" type="button" (click)="goToMaterialDemo()">Material</button>
+      <button class="btn secondary" type="button" (click)="goToPrimeDemo()">PrimeNG</button>
+      <button class="btn primary" type="button">Sign In</button>
+      <button class="btn secondary create-account-btn" type="button">Sign Up</button>
+    </div>
+  </div>
+  <div class="welcome-section">
+    <h1 class="welcome-text">Welcome to Melrose Arch</h1>
+  </div>
+  <div class="promo-card">
+    <div class="promo-left">
+      <img src="images/better-rewards.png" alt="Promo Logo" class="promo-logo">
+    </div>
+
+    <div class="promo-right">
+      <ul class="promo-points">
+        @for (point of promoPoints; track point.text) {
+        <li>
+          <span class="bold">{{ point.highlight }}</span>
+          {{ point.text }}
+        </li>
+        }
+      </ul>
+
+      <div class="promo-actions">
+        <button class="btn primary">Sign Up for Free</button>
+        <button class="btn secondary">Calculate My Rewards</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="card-grid" [class.few]="services.length < 8">
+    @for (service of services; track service.title) {
+    <div class="card service-card" (click)="service.link && openCustomModal(service)" [class.disabled]="!service.link">
+      <div class="card-icon">
+        @if (service.icon) {
+          <img [src]="service.icon" alt="{{ service.title }} Icon" />
+        }
+      </div>
+
+      <h3 class="subheading">{{ service.title }}</h3>
+      <p class="small-text">{{ service.subtitle }}</p>
+    </div>
+    } @empty {
+    <p>No services available</p>
+    }
+  </div>
+
+</div>
+
+<app-iframe-modal
+  [visible]="isModalVisible"
+  [title]="selectedServiceTitle"
+  [url]="selectedServiceUrl"
+  (close)="closeModal()">
+</app-iframe-modal>
+
+@if (isWarning()) {
+  <div class="timeout-warning-backdrop">
+    <div class="timeout-warning-dialog">
+      <h2>Session timeout warning</h2>
+      <div class="timeout-warning-content">
+        <p>Your session will return to the landing page in {{ secondsRemaining() }} seconds.</p>
+        <button class="btn secondary" type="button" (click)="stayActive()">I am still here</button>
+      </div>
+    </div>
+  </div>
+}

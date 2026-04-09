@@ -1,0 +1,254 @@
+@use '../../../styles/variables' as *;
+
+.home {
+  background-color: $background-color;
+  padding: 100px 24px 2px 24px;
+}
+
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28px;
+  background-color: $primary-color;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.top-bar-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.logo-row {
+  cursor: pointer;
+}
+
+.welcome-section {
+  margin: 12px 0 20px 0;
+
+  .welcome-text {
+    font-size: 1.8rem;
+    font-weight: 500;
+    text-align: left;
+    color: $text-color-dark;
+  }
+}
+
+.promo-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: $primary-color;
+  padding: 20px;
+  border-radius: 16px;
+  margin-bottom: 32px;
+  gap: 20px;
+}
+
+.promo-left {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.promo-logo {
+  width: 240px;
+}
+
+.promo-right {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bold {
+  font-weight: 600;
+}
+
+.promo-points {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+    color: $text-color-light;
+
+    &::before {
+      content: "\EB7B";
+      font-family: "remixicon";
+      color: $text-color-light;
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+  }
+}
+
+.promo-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+:host ::ng-deep .prime-brand-filled .p-button {
+  background: #02A049;
+  border: 2px solid #ffffff;
+  color: #ffffff;
+  border-radius: 20px;
+  padding: 12px 20px;
+}
+
+:host ::ng-deep .prime-brand-outlined .p-button {
+  background: #FAFBFA;
+  border: 1px solid #FAFBFA;
+  color: #060606;
+  border-radius: 20px;
+  padding: 12px 20px;
+}
+
+.card-grid {
+  display: grid;
+  gap: 20px;
+}
+
+@media (min-width: 1024px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 1023px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.service-card {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  border-radius: 22px;
+  transition: 0.2s;
+  color: $card-text-color-dark;
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+:host ::ng-deep .service-card .p-card-body {
+  padding: 16px;
+}
+
+:host ::ng-deep .service-card.p-card {
+  box-shadow: none;
+}
+
+.service-card {
+  cursor: pointer;
+}
+
+.service-card.disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.service-card:hover {
+  transform: translateY(-4px);
+}
+
+.subheading {
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.small-text {
+  font-weight: 200;
+  margin-top: 0;
+}
+
+.card-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: #02A0491F;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+
+  i {
+    color: #02A049;
+    font-size: 24px;
+  }
+
+  img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+  }
+}
+
+.primeng-dialog-body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #ffffff;
+
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+    background: #ffffff;
+  }
+}
+
+.embedded-dialog-shell {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+}
+
+.embedded-dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 28px;
+  border-bottom: 2px solid #e7e7e7;
+  gap: 18px;
+
+  .embedded-dialog-title-group {
+    h2 {
+      margin: 0 0 4px 0;
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: $text-color-dark;
+    }
+
+    p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #4d4d4d;
+      font-weight: 500;
+    }
+  }
+}
+
+:host ::ng-deep .prime-end-session .p-button {
+  border: 1px solid #b30000;
+  background: #cc0000;
+  color: #ffffff;
+}

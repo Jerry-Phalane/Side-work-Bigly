@@ -1,0 +1,9 @@
+@use 'variables' as *;
+
+.btn {
+  padding: 10px 16px;
+  border-radius: 4px;
+  background-color: secondary-color;
+  color: text-color-dark;
+  font-weight: bold;
+}

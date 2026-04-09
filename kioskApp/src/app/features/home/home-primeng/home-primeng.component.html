@@ -1,0 +1,82 @@
+<div class="home">
+  <div class="top-bar">
+    <div class="logo-row">
+      <img (click)="goToInit()" src="images/Group.png" alt="Dis-chem Logo">
+    </div>
+    <div class="top-bar-actions">
+      <p-button label="Sign In" styleClass="prime-brand-filled" [rounded]="true"></p-button>
+      <p-button label="Create Account" styleClass="prime-brand-outlined" [outlined]="true" [rounded]="true"></p-button>
+    </div>
+  </div>
+
+  <div class="welcome-section">
+    <h1 class="welcome-text">Welcome to Melrose Arch</h1>
+  </div>
+
+  <div class="promo-card">
+    <div class="promo-left">
+      <img src="images/better-rewards.png" alt="Promo Logo" class="promo-logo">
+    </div>
+    <div class="promo-right">
+      <ul class="promo-points">
+        @for (point of promoPoints; track point.text) {
+          <li><span class="bold">{{ point.highlight }}</span> {{ point.text }}</li>
+        }
+      </ul>
+      <div class="promo-actions">
+        <p-button label="Sign Up for Free" styleClass="prime-brand-filled" [rounded]="true"></p-button>
+        <p-button label="Calculate My Rewards" styleClass="prime-brand-outlined" [outlined]="true" [rounded]="true"></p-button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-grid" [class.few]="services.length < 8">
+    @for (service of services; track service.title) {
+      <p-card styleClass="card service-card" (click)="service.link && openPrimeModal(service)" [class.disabled]="!service.link">
+        <div class="card-icon">
+          @if (service.icon) {
+            <img [src]="service.icon" alt="{{ service.title }} Icon" />
+          }
+        </div>
+        <h3 class="subheading">{{ service.title }}</h3>
+        <p class="small-text">{{ service.subtitle }}</p>
+      </p-card>
+    } @empty {
+      <p>No services available</p>
+    }
+  </div>
+</div>
+
+<p-dialog
+  [(visible)]="isPrimeModalVisible"
+  [modal]="true"
+  [showHeader]="false"
+  [closable]="false"
+  [draggable]="false"
+  [resizable]="false"
+  [dismissableMask]="false"
+  [closeOnEscape]="false"
+  [style]="{ width: '95vw', height: '92vh' }"
+  [contentStyle]="{ padding: '0', height: '100%', overflow: 'hidden' }"
+  styleClass="prime-dialog-demo"
+  (onHide)="closeModal()">
+  <div class="embedded-dialog-shell">
+    <div class="embedded-dialog-header">
+      <div class="embedded-dialog-title-group">
+        <h2>{{ selectedServiceTitle }}</h2>
+        <p>Tap "End Session" to return to the kiosk home screen.</p>
+      </div>
+      <p-button label="End Session" severity="danger" styleClass="prime-end-session" [rounded]="true" (click)="closeModal()"></p-button>
+    </div>
+    @if (selectedServiceUrl) {
+      <div class="primeng-dialog-body">
+        <iframe
+          [src]="selectedServiceUrl"
+          title="Service Content"
+          loading="eager"
+          referrerpolicy="strict-origin-when-cross-origin">
+        </iframe>
+      </div>
+    }
+  </div>
+</p-dialog>

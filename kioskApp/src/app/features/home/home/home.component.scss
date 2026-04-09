@@ -1,0 +1,238 @@
+@use '../../../styles/variables' as *;
+
+.home {
+  background-color: $background-color;
+  padding: 100px 24px 2px 24px;
+}
+
+
+/* ================= TOP BAR ================= */
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28px;
+  background-color: $primary-color;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.top-bar-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.logo-row {
+  cursor: pointer;
+}
+
+.create-account-btn {
+  color: #02A049;
+}
+
+/* ================= WELCOME ================= */
+.welcome-section {
+  margin: 12px 0 20px 0;
+
+  .welcome-text {
+    font-size: 1.8rem;
+    font-weight: 500;
+    text-align: left;
+    color: $text-color-dark;
+  }
+}
+
+/* ================= PROMO CARD ================= */
+.promo-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: $primary-color;
+  padding: 20px;
+  border-radius: 16px;
+  margin-bottom: 32px;
+  gap: 20px;
+}
+
+.promo-left {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.promo-logo {
+  width: 240px;
+}
+
+.promo-right {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bold {
+  font-weight: 600;
+}
+
+.promo-points {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+    color: $text-color-light;
+
+    &::before {
+      content: "\EB7B";
+      font-family: "remixicon";
+      color: $text-color-light;
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+  }
+}
+
+.promo-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.primary {
+  background-color: $primary-color;
+  color: $text-color-light;
+  border-radius: 20px;
+  border: 2px solid $text-color-light;
+  padding: 12px 20px;
+}
+
+.secondary {
+  border: 1px solid $background-color;
+  color: $text-color-dark;
+  background: $background-color;
+  border-radius: 20px;
+  padding: 12px 20px;
+}
+
+/* ================= CARD GRID ================= */
+.card-grid {
+  display: grid;
+  gap: 20px;
+}
+
+@media (min-width: 1024px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 1023px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ================= SERVICE CARD ================= */
+.service-card {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  border-radius: 22px;
+  transition: 0.2s;
+  color: $card-text-color-dark;
+}
+
+.service-card {
+  cursor: pointer;
+}
+
+.service-card.disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.service-card:hover {
+  transform: translateY(-4px);
+}
+
+.subheading {
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.small-text {
+  font-weight: 200;
+  margin-top: 0;
+}
+
+.card-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: #02A0491F;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+
+  i {
+    color: #02A049;
+    font-size: 24px;
+  }
+
+  img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+  }
+}
+
+.timeout-warning-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.42);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1600;
+  padding: 16px;
+}
+
+.timeout-warning-dialog {
+  width: 420px;
+  max-width: 90vw;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.24);
+  padding: 18px 18px 16px 18px;
+
+  h2 {
+    margin: 0 0 10px 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: $text-color-dark;
+  }
+}
+
+.timeout-warning-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  p {
+    margin: 0;
+    color: $text-color-dark;
+  }
+}
