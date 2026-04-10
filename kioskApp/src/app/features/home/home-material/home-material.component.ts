@@ -1,7 +1,7 @@
 import { Component, TemplateRef, ViewChild, effect } from '@angular/core';
 import { Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { IdleTimeoutService } from '../../../shared/services/idle-timeout.service';
@@ -59,20 +59,12 @@ export class HomeMaterialComponent {
   private readonly endSessionConfirmationMessage = 'Ending your session will close this service and return to the kiosk home screen.';
   private readonly endSessionConfirmationTitle = 'End Session';
   private readonly componentDialogConfig = {
-    width: '98vw',
-    height: '96dvh',
-    maxHeight: '96dvh',
-    maxWidth: '98vw',
     disableClose: true,
     autoFocus: false,
     restoreFocus: false,
     panelClass: 'material-dialog-demo'
   } as const;
   private readonly iframeDialogConfig = {
-    width: '98vw',
-    height: '96dvh',
-    maxHeight: '96dvh',
-    maxWidth: '98vw',
     disableClose: true,
     delayFocusTrap: true,
     autoFocus: 'dialog' as const,
@@ -172,7 +164,10 @@ export class HomeMaterialComponent {
       return;
     }
 
-    const dialogConfig = dialogType === 'component' ? this.componentDialogConfig : this.iframeDialogConfig;
+    const dialogConfig = {
+      ...(dialogType === 'component' ? this.componentDialogConfig : this.iframeDialogConfig),
+      ...this.getResponsiveDialogSizeConfig()
+    };
     this.materialDialogRef = this.materialDialog.open(this.materialDialogTemplate, dialogConfig);
     this.materialDialogRef.afterClosed().subscribe(() => {
       this.materialDialogRef = null;
@@ -181,6 +176,25 @@ export class HomeMaterialComponent {
 
   private isBookingAndTicketingService(service: HomeService): boolean {
     return service.title === this.bookingAndTicketingTitle;
+  }
+
+  private getResponsiveDialogSizeConfig(): Pick<MatDialogConfig, 'width' | 'maxWidth' | 'height' | 'maxHeight'> {
+    const isPortrait = window.matchMedia('(orientation: portrait)').matches;
+    if (isPortrait) {
+      return {
+        width: '96vw',
+        maxWidth: '96vw',
+        height: '86dvh',
+        maxHeight: '86dvh'
+      };
+    }
+
+    return {
+      width: '98vw',
+      maxWidth: '98vw',
+      height: '96dvh',
+      maxHeight: '96dvh'
+    };
   }
 
   private openConfirmationDialog(title: string, message: string): void {

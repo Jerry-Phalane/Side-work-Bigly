@@ -35,6 +35,7 @@
               "src/styles.scss"
             ],         
             "scripts": [],
+            "serviceWorker": "ngsw-config.json",
             "stylePreprocessorOptions": {
             "includePaths": [
             "src/styles"

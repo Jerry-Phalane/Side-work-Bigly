@@ -1,2 +1,41 @@
+<section class="booking-ticketing">
+  <div class="booking-shell">
+    <header class="booking-header">
+      <h1>How can we care for you today?</h1>
+      <p>Before you carry on, you&apos;ll be asked to enter a few details about yourself</p>
+    </header>
 
-hi
+    <div class="service-grid">
+      @for (card of cards; track card.title) {
+        <mat-card class="service-card">
+          <div class="card-icon">
+            <mat-icon>{{ card.icon }}</mat-icon>
+          </div>
+
+          <h2>{{ card.title }}</h2>
+          <p class="card-description">{{ card.description }}</p>
+
+          <div class="card-actions">
+            <button mat-flat-button class="material-brand-filled">{{ card.primaryActionLabel }}</button>
+            @if (card.secondaryActionLabel) {
+              <button mat-stroked-button class="material-brand-outlined">{{ card.secondaryActionLabel }}</button>
+            }
+          </div>
+
+          <div class="availability">
+            <mat-icon>{{ card.availabilityIcon }}</mat-icon>
+            <p><span>{{ card.availabilityLabel }}</span> {{ card.availabilityValue }}</p>
+          </div>
+        </mat-card>
+      }
+    </div>
+
+    <footer class="booking-footer">
+      <button mat-button class="phone-action">
+        <mat-icon>qr_code_2</mat-icon>
+        <span>I&apos;ll do this on my phone instead</span>
+      </button>
+      <button mat-button class="help-action">Need help?</button>
+    </footer>
+  </div>
+</section>
