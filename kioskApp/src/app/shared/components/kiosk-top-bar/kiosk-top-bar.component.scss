@@ -1,0 +1,147 @@
+.kiosk-shell {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.kiosk-top-bar {
+  background: #fff;
+  border-bottom: 1px solid #d9d9db;
+}
+
+.kiosk-top-bar.compact .kiosk-top-row {
+  min-height: 72px;
+}
+
+.kiosk-top-row {
+  min-height: 84px;
+  display: grid;
+  grid-template-columns: 64px 1fr 64px;
+  align-items: center;
+  column-gap: 8px;
+  padding: 0 10px;
+}
+
+.left-zone,
+.right-zone {
+  display: flex;
+  align-items: center;
+}
+
+.left-zone {
+  justify-content: flex-start;
+}
+
+.right-zone {
+  justify-content: flex-end;
+}
+
+.center-zone {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-button {
+  width: 48px;
+  height: 48px;
+  border: 0;
+  background: transparent;
+  color: #262a2f;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.icon-button mat-icon {
+  width: 30px;
+  height: 30px;
+  font-size: 30px;
+  line-height: 30px;
+}
+
+.steps {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #8f9398;
+  font-size: 19px;
+  line-height: 1;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.step {
+  flex: 0 0 auto;
+  color: #9a9ea2;
+}
+
+.step-button {
+  flex: 0 0 auto;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  color: #9a9ea2;
+  font: inherit;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.step.active {
+  color: #171a1f;
+}
+
+.step-button.active {
+  color: #171a1f;
+}
+
+.step-separator {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  line-height: 24px;
+  color: #b0b3b8;
+}
+
+.progress-track {
+  width: 100%;
+  height: 4px;
+  background: #d9d9db;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #0fa35a;
+  transition: width 180ms ease-out;
+}
+
+.kiosk-content {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+@media (max-width: 900px) {
+  .kiosk-top-row {
+    grid-template-columns: 56px 1fr 56px;
+    min-height: 68px;
+    padding: 0 8px;
+  }
+
+  .steps {
+    font-size: 17px;
+  }
+
+  .step-separator {
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    line-height: 20px;
+  }
+}

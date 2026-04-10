@@ -3,7 +3,7 @@ import { LandingPageComponentComponent } from './features/home/landing-page/land
 import { HomeMaterialComponent } from './features/home/home-material/home-material.component';
 import { HomePrimengComponent } from './features/home/home-primeng/home-primeng.component';
 import { LandingHomeComponent } from './features/home/landing-home/landing-home.component';
-import { BetterRewardsComponent } from './features/home/landing-home/better-rewards/better-rewards.component';
+import { BetterRewardsJourneyComponent } from './features/home/landing-home/better-rewards-journey/better-rewards-journey.component';
 
 export const routes: Routes = [
 
@@ -29,7 +29,7 @@ export const routes: Routes = [
     },
     {
         path: 'landing-home/better-rewards',
-        component: BetterRewardsComponent
+        component: BetterRewardsJourneyComponent
     },
 
 ];

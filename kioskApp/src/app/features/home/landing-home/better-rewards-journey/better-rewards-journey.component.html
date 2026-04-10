@@ -1,0 +1,28 @@
+<section class="better-rewards-journey">
+  <app-kiosk-top-bar
+    [showBack]="showBack"
+    [showClose]="true"
+    [showProgressTrack]="showProgressTrack"
+    [progressPercent]="progressPercent"
+    [topInsetMode]="'compact'"
+    [steps]="headerSteps"
+    [allowStepClick]="true"
+    [maxReachableStepIndex]="maxReachableStepIndex"
+    (back)="previousStep()"
+    (close)="closeJourney()"
+    (stepSelected)="goToStep($event)"
+  >
+    @if (currentStepIndex === 0) {
+      <app-better-rewards-landing (next)="nextStep()" />
+    }
+
+    @if (currentStepIndex === 1) {
+      <app-better-rewards-basket-picker
+        [model]="journeyData"
+        [form]="journeyForm"
+        (modelChange)="onJourneyDataChange($event)"
+        (next)="nextStep()"
+      />
+    }
+  </app-kiosk-top-bar>
+</section>

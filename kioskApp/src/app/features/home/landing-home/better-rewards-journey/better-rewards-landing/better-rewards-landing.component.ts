@@ -1,7 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Output, EventEmitter } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { Router } from '@angular/router';
 
 interface RewardTile {
   id: string;
@@ -10,14 +9,14 @@ interface RewardTile {
 }
 
 @Component({
-  selector: 'app-better-rewards',
+  selector: 'app-better-rewards-landing',
   standalone: true,
   imports: [MatButtonModule, MatIconModule],
-  templateUrl: './better-rewards.component.html',
-  styleUrl: './better-rewards.component.scss',
+  templateUrl: './better-rewards-landing.component.html',
+  styleUrl: './better-rewards-landing.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BetterRewardsComponent {
+export class BetterRewardsLandingComponent {
   private readonly tileRowSize = 11;
   private readonly tileImagePool: ReadonlyArray<string> = [
     'images/better-rewards.png',
@@ -28,14 +27,12 @@ export class BetterRewardsComponent {
 
   readonly rowOneTiles: ReadonlyArray<RewardTile> = this.buildTileRow('row-1');
   readonly rowTwoTiles: ReadonlyArray<RewardTile> = this.buildTileRow('row-2');
-
   readonly rowOneLoopTiles: ReadonlyArray<RewardTile> = [...this.rowOneTiles, ...this.rowOneTiles];
   readonly rowTwoLoopTiles: ReadonlyArray<RewardTile> = [...this.rowTwoTiles, ...this.rowTwoTiles];
+  @Output() readonly next = new EventEmitter<void>();
 
-  constructor(private readonly router: Router) {}
-
-  goBack(): void {
-    this.router.navigate(['/landing-home']);
+  goToNextStep(): void {
+    this.next.emit();
   }
 
   trackTile(index: number, tile: RewardTile): string {
@@ -44,7 +41,6 @@ export class BetterRewardsComponent {
 
   private buildTileRow(rowKey: string): ReadonlyArray<RewardTile> {
     const offset = rowKey === 'row-1' ? 0 : 1;
-
     return Array.from({ length: this.tileRowSize }, (_, index) => ({
       id: `${rowKey}-${index}`,
       src: this.tileImagePool[(index + offset) % this.tileImagePool.length],

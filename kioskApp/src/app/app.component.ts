@@ -1,5 +1,5 @@
-import { Component, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, effect, inject } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
 import { IdleTimeoutService } from './shared/services/idle-timeout.service';
 
 @Component({
@@ -10,6 +10,17 @@ import { IdleTimeoutService } from './shared/services/idle-timeout.service';
 })
 export class AppComponent {
   private readonly idleTimeoutService = inject(IdleTimeoutService);
+  private readonly router = inject(Router);
+
+  constructor() {
+    effect(() => {
+      if (!this.idleTimeoutService.isIdle()) {
+        return;
+      }
+
+      void this.router.navigate(['/landing-home']);
+    });
+  }
 
   get secondsRemaining() {
     return this.idleTimeoutService.secondsRemaining;

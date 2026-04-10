@@ -1,0 +1,57 @@
+<div class="kiosk-shell">
+  <header class="kiosk-top-bar" [class.compact]="topInsetMode === 'compact'">
+    <div class="kiosk-top-row">
+      <div class="left-zone">
+        @if (showBack) {
+          <button type="button" class="icon-button" (click)="onBack()" aria-label="Go back">
+            <mat-icon aria-hidden="true">arrow_back</mat-icon>
+          </button>
+        }
+      </div>
+
+      <div class="center-zone">
+        <ng-content select="[top-bar-center]"></ng-content>
+        @if (steps.length) {
+          <nav class="steps" aria-label="Journey progress">
+            @for (step of steps; track step.label + '-' + $index) {
+              @if (isStepClickable($index)) {
+                <button
+                  type="button"
+                  class="step-button"
+                  [class.active]="step.active"
+                  (click)="onStepSelected($index)"
+                  [attr.aria-label]="'Go to ' + step.label"
+                >
+                  {{ step.label }}
+                </button>
+              } @else {
+                <span class="step" [class.active]="step.active">{{ step.label }}</span>
+              }
+              @if ($index < steps.length - 1) {
+                <mat-icon class="step-separator" aria-hidden="true">chevron_right</mat-icon>
+              }
+            }
+          </nav>
+        }
+      </div>
+
+      <div class="right-zone">
+        @if (showClose) {
+          <button type="button" class="icon-button" (click)="onClose()" aria-label="Close screen">
+            <mat-icon aria-hidden="true">close</mat-icon>
+          </button>
+        }
+      </div>
+    </div>
+
+    @if (showProgressTrack) {
+      <div class="progress-track" aria-hidden="true">
+        <div class="progress-fill" [style.width.%]="clampedProgressPercent"></div>
+      </div>
+    }
+  </header>
+
+  <main class="kiosk-content">
+    <ng-content></ng-content>
+  </main>
+</div>

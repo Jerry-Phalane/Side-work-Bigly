@@ -1,0 +1,24 @@
+<section class="basket-picker-content">
+  <header class="basket-header">
+    <h1>Pick a basket of goodies</h1>
+    <p>Start by choosing a basket that has the kinds of things you need</p>
+  </header>
+
+  <div class="basket-grid" role="list">
+    @for (basket of baskets; track basket.id) {
+      <app-better-rewards-basket-card
+        role="listitem"
+        [title]="basket.title"
+        [price]="basket.price"
+        [itemCount]="basket.itemCount"
+        [imagePaths]="basket.imagePaths"
+        [selected]="model.selectedBasketId === basket.id"
+        (selectedChange)="selectBasket(basket.id)"
+      />
+    }
+  </div>
+
+  <button type="button" class="continue-button" mat-flat-button [disabled]="!model.selectedBasketId" (click)="continue()">
+    Continue
+  </button>
+</section>

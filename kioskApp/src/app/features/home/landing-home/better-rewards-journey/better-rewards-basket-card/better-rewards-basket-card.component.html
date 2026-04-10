@@ -1,0 +1,14 @@
+<button type="button" class="basket-card" [ngClass]="{ selected }" (click)="selectCard()">
+  <div class="basket-placeholders" aria-hidden="true">
+    @for (imagePath of imagePaths; track imagePath) {
+      <span class="placeholder-cell">
+        <img class="placeholder-image" [src]="imagePath" alt="" />
+      </span>
+    }
+  </div>
+  <span class="basket-title">{{ title }}</span>
+  <div class="basket-meta">
+    <span>{{ price }}</span>
+    <span>{{ itemCount }}</span>
+  </div>
+</button>
