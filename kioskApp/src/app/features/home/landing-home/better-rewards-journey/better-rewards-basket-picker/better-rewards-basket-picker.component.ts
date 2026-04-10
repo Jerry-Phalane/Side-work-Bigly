@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { BetterRewardsBasketCardComponent } from '../better-rewards-basket-card/better-rewards-basket-card.component';
 import { BetterRewardsJourneyData } from '../better-rewards-journey.models';
@@ -11,6 +11,10 @@ interface BasketOption {
   itemCount: string;
   imagePaths: ReadonlyArray<string>;
 }
+
+type JourneyFormGroup = FormGroup<{
+  selectedBasketId: FormControl<string | null>;
+}>;
 
 @Component({
   selector: 'app-better-rewards-basket-picker',
@@ -26,8 +30,8 @@ export class BetterRewardsBasketPickerComponent {
     { id: 'home-cleaning', title: 'Home cleaning essentials', price: 'R350.00', itemCount: '6 items', imagePaths: this.getRandomImagePaths() },
     { id: 'health-fitness', title: 'Health and fitness pack', price: 'R350.00', itemCount: '6 items', imagePaths: this.getRandomImagePaths() }
   ];
-  @Input() model: BetterRewardsJourneyData = { selectedBasketId: null };
-  @Input() form?: FormGroup;
+  @Input({ required: true }) model!: BetterRewardsJourneyData;
+  @Input() form?: JourneyFormGroup;
   @Output() readonly modelChange = new EventEmitter<BetterRewardsJourneyData>();
   @Output() readonly next = new EventEmitter<void>();
 
@@ -36,7 +40,6 @@ export class BetterRewardsBasketPickerComponent {
       ...this.model,
       selectedBasketId: basketId
     };
-    this.model = nextModel;
     this.modelChange.emit(nextModel);
     this.form?.patchValue({ selectedBasketId: basketId }, { emitEvent: false });
   }

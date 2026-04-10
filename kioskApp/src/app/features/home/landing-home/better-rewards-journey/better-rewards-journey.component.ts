@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BetterRewardsBasketPickerComponent } from './better-rewards-basket-picker/better-rewards-basket-picker.component';
@@ -15,6 +15,8 @@ import { BetterRewardsJourneyData } from './better-rewards-journey.models';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BetterRewardsJourneyComponent {
+  private readonly router = inject(Router);
+
   readonly steps: ReadonlyArray<KioskTopBarStep> = [
     { label: 'Save instantly' },
     { label: 'Visit the pharmacy' }
@@ -29,8 +31,6 @@ export class BetterRewardsJourneyComponent {
   };
   currentStepIndex = 0;
   maxReachableStepIndex = 0;
-
-  constructor(private readonly router: Router) {}
 
   get showBack(): boolean {
     return this.currentStepIndex > 0;

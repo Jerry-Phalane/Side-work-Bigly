@@ -1,7 +1,7 @@
 <section class="better-rewards-content">
   <div class="tiles-marquee" aria-hidden="true">
     <div class="tiles-track tiles-track-left">
-      @for (tile of rowOneLoopTiles; track trackTile($index, tile)) {
+      @for (tile of rowOneLoopTiles; track tile.id) {
       <div class="tile">
         <img [src]="tile.src" [alt]="tile.alt" />
       </div>
@@ -9,7 +9,7 @@
     </div>
 
     <div class="tiles-track tiles-track-right">
-      @for (tile of rowTwoLoopTiles; track trackTile($index, tile)) {
+      @for (tile of rowTwoLoopTiles; track tile.id) {
       <div class="tile">
         <img [src]="tile.src" [alt]="tile.alt" />
       </div>

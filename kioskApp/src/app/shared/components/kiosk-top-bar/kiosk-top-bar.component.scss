@@ -56,6 +56,13 @@
   cursor: pointer;
 }
 
+.icon-button:focus-visible,
+.step-button:focus-visible {
+  outline: 2px solid #0fa35a;
+  outline-offset: 2px;
+  border-radius: 999px;
+}
+
 .icon-button mat-icon {
   width: 30px;
   height: 30px;

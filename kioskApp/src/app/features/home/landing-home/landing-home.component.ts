@@ -88,8 +88,4 @@ export class LandingHomeComponent {
 
     this.router.navigateByUrl(card.route);
   }
-
-  trackCardById(_: number, card: HomeActionCard): string {
-    return card.id;
-  }
 }

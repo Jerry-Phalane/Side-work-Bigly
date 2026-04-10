@@ -14,7 +14,7 @@
   </mat-card>
 
   <div class="content-grid">
-    @for (card of cards; track trackCardById($index, card)) {
+    @for (card of cards; track card.id) {
       <mat-card class="action-card" [class.featured]="card.featured">
         <div class="icon-shell" [class.featured]="card.featured">
           @if (card.featured && card.image) {

@@ -27,16 +27,12 @@ export class BetterRewardsLandingComponent {
 
   readonly rowOneTiles: ReadonlyArray<RewardTile> = this.buildTileRow('row-1');
   readonly rowTwoTiles: ReadonlyArray<RewardTile> = this.buildTileRow('row-2');
-  readonly rowOneLoopTiles: ReadonlyArray<RewardTile> = [...this.rowOneTiles, ...this.rowOneTiles];
-  readonly rowTwoLoopTiles: ReadonlyArray<RewardTile> = [...this.rowTwoTiles, ...this.rowTwoTiles];
+  readonly rowOneLoopTiles: ReadonlyArray<RewardTile> = this.createLoopTiles(this.rowOneTiles);
+  readonly rowTwoLoopTiles: ReadonlyArray<RewardTile> = this.createLoopTiles(this.rowTwoTiles);
   @Output() readonly next = new EventEmitter<void>();
 
   goToNextStep(): void {
     this.next.emit();
-  }
-
-  trackTile(index: number, tile: RewardTile): string {
-    return `${tile.id}-${index}`;
   }
 
   private buildTileRow(rowKey: string): ReadonlyArray<RewardTile> {
@@ -46,5 +42,12 @@ export class BetterRewardsLandingComponent {
       src: this.tileImagePool[(index + offset) % this.tileImagePool.length],
       alt: 'Better Rewards tile image'
     }));
+  }
+
+  private createLoopTiles(tiles: ReadonlyArray<RewardTile>): ReadonlyArray<RewardTile> {
+    return [
+      ...tiles.map((tile) => ({ ...tile, id: `${tile.id}-a` })),
+      ...tiles.map((tile) => ({ ...tile, id: `${tile.id}-b` }))
+    ];
   }
 }
