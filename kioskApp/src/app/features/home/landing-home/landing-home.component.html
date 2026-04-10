@@ -1,0 +1,49 @@
+<section class="landing-home">
+  <header class="brand-header">
+    <div class="brand-logo">Dis-Chem <span>+</span></div>
+  </header>
+
+  <mat-card class="welcome-card" appearance="outlined">
+    <div class="welcome-content">
+      <div>
+        <h1>Welcome to Melrose Arch</h1>
+        <p>How can we help you today?</p>
+      </div>
+      <button mat-stroked-button>Store info</button>
+    </div>
+  </mat-card>
+
+  <div class="content-grid">
+    @for (card of cards; track card.title) {
+      <mat-card class="action-card" [class.featured]="card.featured">
+        <div class="icon-shell" [class.featured]="card.featured">
+          @if (card.featured && card.image) {
+            <img class="featured-image" [src]="card.image" alt="Better Rewards" />
+          } @else {
+            <mat-icon>{{ card.icon }}</mat-icon>
+          }
+        </div>
+
+        <h2>
+          {{ card.title }}
+          @if (card.titleAccent) {
+            <span class="title-accent"> {{ card.titleAccent }}</span>
+          }
+          @if (card.titleAfterAccent) {
+            {{ ' ' + card.titleAfterAccent }}
+          }
+          @if (card.titleSuffix) {
+            <br />
+            {{ card.titleSuffix }}
+          }
+        </h2>
+        <p>{{ card.subtitle }}</p>
+
+        <button mat-stroked-button (click)="onCardAction(card)">{{ card.buttonLabel }}</button>
+        @if (card.footerLabel) {
+          <span class="footer-label">{{ card.footerLabel }}</span>
+        }
+      </mat-card>
+    }
+  </div>
+</section>
