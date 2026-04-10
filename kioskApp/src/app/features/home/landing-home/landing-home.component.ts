@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { IdleTimeoutService } from '../../../shared/services/idle-timeout.service';
 
 interface HomeActionCard {
+  id: string;
   title: string;
   titleAccent?: string;
   titleAfterAccent?: string;
@@ -24,20 +25,20 @@ interface HomeActionCard {
   standalone: true,
   imports: [MatCardModule, MatButtonModule, MatIconModule],
   templateUrl: './landing-home.component.html',
-  styleUrl: './landing-home.component.scss'
+  styleUrl: './landing-home.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LandingHomeComponent implements OnInit {
-  constructor(
-    private readonly idleTimeoutService: IdleTimeoutService,
-    private readonly router: Router
-  ) {}
+export class LandingHomeComponent {
+  private readonly idleTimeoutService = inject(IdleTimeoutService);
+  private readonly router = inject(Router);
 
-  ngOnInit(): void {
+  constructor() {
     this.idleTimeoutService.start();
   }
 
   readonly cards: ReadonlyArray<HomeActionCard> = [
     {
+      id: 'better-rewards',
       title: 'How to',
       titleAccent: 'save big',
       titleAfterAccent: 'with',
@@ -51,24 +52,28 @@ export class LandingHomeComponent implements OnInit {
       featured: true
     },
     {
+      id: 'pharmacy-queue',
       title: 'Visit the pharmacy or join the queue (kiosk)',
       subtitle: 'Two lines',
       buttonLabel: 'Get a ticket or book a visit',
       icon: 'medical_services'
     },
     {
+      id: 'dis-chem-cover',
       title: 'Get Dis-Chem cover',
       subtitle: 'Use kiosk',
       buttonLabel: 'See cover options',
       icon: 'favorite'
     },
     {
+      id: 'learn-about-dis-chem',
       title: 'Learn about Dis-Chem',
       subtitle: 'More info',
       buttonLabel: 'Learn more',
       icon: 'add_box'
     },
     {
+      id: 'online-store',
       title: 'Online store',
       subtitle: 'Shop online',
       buttonLabel: 'Shop now',
@@ -82,5 +87,9 @@ export class LandingHomeComponent implements OnInit {
     }
 
     this.router.navigateByUrl(card.route);
+  }
+
+  trackCardById(_: number, card: HomeActionCard): string {
+    return card.id;
   }
 }

@@ -19,10 +19,7 @@ $card-border: 1px solid rgba(0, 0, 0, 0.08);
   min-width: 744px;
   min-height: 100dvh;
   background: $page-background;
-  border-radius: 0;
-  padding: 30px;
-  padding-bottom: 72px;
-  padding-top: 0;
+  padding: 0 30px 72px;
   font-family: $font-family;
   box-sizing: border-box;
   display: flex;
@@ -54,7 +51,7 @@ $card-border: 1px solid rgba(0, 0, 0, 0.08);
   background-color: $surface-color;
   margin-bottom: 16px;
   border-radius: 12px;
-  border-color: rgba(0, 0, 0, 0.08);
+  border: $card-border;
   padding: 15px;
 }
 
@@ -104,8 +101,7 @@ $card-border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 16px;
   box-shadow: none;
   border: $card-border;
-  padding: 24px;
-  padding-top: 60px;
+  padding: 60px 24px 24px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -283,8 +279,7 @@ $card-border: 1px solid rgba(0, 0, 0, 0.08);
 @media (min-width: 834px) and (max-width: 1194px) {
   .landing-home {
     min-height: 100dvh;
-    padding: 16px;
-    padding-top: 0;
+    padding: 0 16px;
   }
 
   .welcome-content {
@@ -302,8 +297,7 @@ $card-border: 1px solid rgba(0, 0, 0, 0.08);
   }
 
   .action-card {
-    padding: 20px;
-    padding-top: 50px;
+    padding: 50px 20px 20px;
 
     h2 {
       font-size: 0.74rem;
@@ -398,8 +392,7 @@ $card-border: 1px solid rgba(0, 0, 0, 0.08);
 @media (min-width: 744px) and (max-width: 833px) {
   .landing-home {
     min-height: 100dvh;
-    padding: 14px;
-    padding-top: 0;
+    padding: 0 14px;
   }
 
   .brand-logo {
@@ -429,8 +422,7 @@ $card-border: 1px solid rgba(0, 0, 0, 0.08);
   }
 
   .action-card {
-    padding: 18px;
-    padding-top: 46px;
+    padding: 46px 18px 18px;
 
     h2 {
       font-size: 0.68rem;

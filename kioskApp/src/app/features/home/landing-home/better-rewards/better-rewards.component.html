@@ -1,5 +1,38 @@
 <section class="better-rewards">
-  <h1>Better Rewards</h1>
-  <p>More details about Better Rewards will appear here.</p>
-  <button mat-stroked-button (click)="goBack()">Back</button>
+  <div class="screen-shell">
+    <button type="button" class="close-button" (click)="goBack()" aria-label="Close better rewards screen">
+      &times;
+    </button>
+
+    <div class="tiles-marquee" aria-hidden="true">
+      <div class="tiles-track tiles-track-left">
+        @for (tile of rowOneLoopTiles; track trackTile($index, tile)) {
+          <div class="tile">
+            <img [src]="tile.src" [alt]="tile.alt" />
+          </div>
+        }
+      </div>
+
+      <div class="tiles-track tiles-track-right">
+        @for (tile of rowTwoLoopTiles; track trackTile($index, tile)) {
+          <div class="tile">
+            <img [src]="tile.src" [alt]="tile.alt" />
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="content">
+      <h1>Save more on the things you love</h1>
+      <p>
+        Better Rewards gets you instant discounts on all your favourite brands, every time you shop. Take a short
+        shopping trip with us to see how.
+      </p>
+      <div class="content-divider"></div>
+      <button type="button" class="cta-button" mat-flat-button (click)="goBack()">
+        <span class="cta-label">Let's go!</span>
+        <mat-icon class="cta-icon" aria-hidden="true">arrow_forward</mat-icon>
+      </button>
+    </div>
+  </div>
 </section>

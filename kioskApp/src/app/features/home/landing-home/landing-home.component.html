@@ -9,16 +9,16 @@
         <h1>Welcome to Melrose Arch</h1>
         <p>How can we help you today?</p>
       </div>
-      <button mat-stroked-button>Store info</button>
+      <button type="button" mat-stroked-button>Store info</button>
     </div>
   </mat-card>
 
   <div class="content-grid">
-    @for (card of cards; track card.title) {
+    @for (card of cards; track trackCardById($index, card)) {
       <mat-card class="action-card" [class.featured]="card.featured">
         <div class="icon-shell" [class.featured]="card.featured">
           @if (card.featured && card.image) {
-            <img class="featured-image" [src]="card.image" alt="Better Rewards" />
+            <img class="featured-image" [src]="card.image" [alt]="card.title" />
           } @else {
             <mat-icon>{{ card.icon }}</mat-icon>
           }
@@ -39,7 +39,7 @@
         </h2>
         <p>{{ card.subtitle }}</p>
 
-        <button mat-stroked-button (click)="onCardAction(card)">{{ card.buttonLabel }}</button>
+        <button type="button" mat-stroked-button (click)="onCardAction(card)">{{ card.buttonLabel }}</button>
         @if (card.footerLabel) {
           <span class="footer-label">{{ card.footerLabel }}</span>
         }
