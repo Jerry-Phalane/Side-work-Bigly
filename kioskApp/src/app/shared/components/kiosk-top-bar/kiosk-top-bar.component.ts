@@ -6,23 +6,50 @@ export interface KioskTopBarStep {
   active?: boolean;
 }
 
+export interface KioskTopBarTillSlipPromoDetailLine {
+  id: string;
+  value: string;
+  boldPrefix?: string;
+  labelSuffix: string;
+}
+
+export interface KioskTopBarTillSlipData {
+  title: string;
+  orderTotalLabel: string;
+  orderTotalValue: string;
+  rewardsLabel: string;
+  rewardsValue: string;
+  promoSectionTitle: string;
+  promoSectionTotalValue: string;
+  promoDetailLines: ReadonlyArray<KioskTopBarTillSlipPromoDetailLine>;
+  youPayLabel: string;
+  youPayValue: string;
+  vatLabel: string;
+  vatValue: string;
+  youSaveLabel: string;
+  youSaveValue: string;
+}
+
 @Component({
   selector: 'app-kiosk-top-bar',
   standalone: true,
   imports: [MatIconModule],
   templateUrl: './kiosk-top-bar.component.html',
   styleUrl: './kiosk-top-bar.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class KioskTopBarComponent {
   @Input() showBack = false;
   @Input() showClose = true;
+  @Input() showSteps = true;
   @Input() showProgressTrack = true;
   @Input() progressPercent = 0;
   @Input() steps: ReadonlyArray<KioskTopBarStep> = [];
   @Input() allowStepClick = false;
   @Input() maxReachableStepIndex = -1;
   @Input() topInsetMode: 'regular' | 'compact' = 'regular';
+  @Input() showTillSlip = false;
+  @Input({ required: true }) tillSlipData!: KioskTopBarTillSlipData;
 
   @Output() readonly back = new EventEmitter<void>();
   @Output() readonly close = new EventEmitter<void>();

@@ -1,7 +1,7 @@
 <div class="kiosk-shell">
   <header class="kiosk-top-bar" [class.compact]="topInsetMode === 'compact'">
     <div class="kiosk-top-row">
-      <div class="left-zone">
+      <div class="kiosk-top-row__side kiosk-top-row__side--start">
         @if (showBack) {
           <button type="button" class="icon-button" (click)="onBack()" aria-label="Go back">
             <mat-icon aria-hidden="true">arrow_back</mat-icon>
@@ -9,9 +9,9 @@
         }
       </div>
 
-      <div class="center-zone">
+      <div class="kiosk-top-row__center">
         <ng-content select="[top-bar-center]"></ng-content>
-        @if (steps.length) {
+        @if (showSteps && steps.length) {
           <nav class="steps" aria-label="Journey progress">
             @for (step of steps; track step.label + '-' + $index) {
               @if (isStepClickable($index)) {
@@ -20,8 +20,7 @@
                   class="step-button"
                   [class.active]="step.active"
                   (click)="onStepSelected($index)"
-                  [attr.aria-label]="'Go to ' + step.label"
-                >
+                  [attr.aria-label]="'Go to ' + step.label">
                   {{ step.label }}
                 </button>
               } @else {
@@ -35,7 +34,7 @@
         }
       </div>
 
-      <div class="right-zone">
+      <div class="kiosk-top-row__side kiosk-top-row__side--end">
         @if (showClose) {
           <button type="button" class="icon-button" (click)="onClose()" aria-label="Close screen">
             <mat-icon aria-hidden="true">close</mat-icon>
@@ -51,7 +50,74 @@
     }
   </header>
 
-  <main class="kiosk-content">
-    <ng-content></ng-content>
+  <main class="kiosk-content" [class.kiosk-content--with-till-slip]="showTillSlip">
+    <div class="kiosk-content__main">
+      <ng-content></ng-content>
+    </div>
+
+    @if (showTillSlip) {
+      <aside class="till-slip" aria-label="Till slip summary">
+        <div class="till-slip-card">
+          <div class="till-slip-card__body">
+            <h2 class="till-slip-card__title">{{ tillSlipData.title }}</h2>
+
+            <div class="till-slip-line">
+              <span class="till-slip-line__label till-slip-line__label--muted">{{ tillSlipData.orderTotalLabel }}</span>
+              <strong class="till-slip-line__value">{{ tillSlipData.orderTotalValue }}</strong>
+            </div>
+
+            <div class="till-slip-divider" role="presentation"></div>
+
+            <div class="till-slip-line">
+              <div class="till-slip-rewards">
+                <span class="till-slip-rewards__badge">+B</span>
+                <span class="till-slip-rewards__name">{{ tillSlipData.rewardsLabel }}</span>
+              </div>
+              <strong class="till-slip-line__value">{{ tillSlipData.rewardsValue }}</strong>
+            </div>
+
+            <div class="till-slip-promo-block">
+              <div class="till-slip-line till-slip-line--promo-summary">
+                <span class="till-slip-line__label till-slip-line__label--muted">{{ tillSlipData.promoSectionTitle }}</span>
+                <strong class="till-slip-line__value">{{ tillSlipData.promoSectionTotalValue }}</strong>
+              </div>
+              @for (line of tillSlipData.promoDetailLines; track line.id) {
+                <div class="till-slip-line till-slip-line--promo-detail">
+                  <span class="till-slip-line__label till-slip-line__label--muted till-slip-promo-detail__label">
+                    @if (line.boldPrefix) {
+                      <strong class="till-slip-promo-detail__pct">{{ line.boldPrefix }}</strong>{{ line.labelSuffix }}
+                    } @else {
+                      {{ line.labelSuffix }}
+                    }
+                  </span>
+                  <span class="till-slip-line__value till-slip-line__value--muted">{{ line.value }}</span>
+                </div>
+              }
+            </div>
+          </div>
+
+          <div class="till-slip-card__footer">
+            <div class="till-slip-line till-slip-line--pay">
+              <span class="till-slip-line__pay-label">{{ tillSlipData.youPayLabel }}</span>
+              <strong class="till-slip-line__pay-value">{{ tillSlipData.youPayValue }}</strong>
+            </div>
+
+            <div class="till-slip-line">
+              <span class="till-slip-line__label till-slip-line__label--muted till-slip-line__label--small">
+                {{ tillSlipData.vatLabel }}
+              </span>
+              <span class="till-slip-line__value till-slip-line__value--muted till-slip-line__value--small">
+                {{ tillSlipData.vatValue }}
+              </span>
+            </div>
+
+            <button type="button" class="till-slip-save">
+              <span class="till-slip-save__label">{{ tillSlipData.youSaveLabel }}</span>
+              <strong class="till-slip-save__value">{{ tillSlipData.youSaveValue }}</strong>
+            </button>
+          </div>
+        </div>
+      </aside>
+    }
   </main>
 </div>

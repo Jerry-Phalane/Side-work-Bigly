@@ -5,6 +5,7 @@ import { isPlatformBrowser } from '@angular/common';
 export class IdleTimeoutService implements OnDestroy {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly isBrowser = isPlatformBrowser(this.platformId);
+  private readonly isTimeoutEnabled = false;
   private readonly idleThresholdSeconds = 30;
   private readonly warningThresholdSeconds = 10;
   private readonly activityThrottleMs = 300;
@@ -30,7 +31,7 @@ export class IdleTimeoutService implements OnDestroy {
   private isStopped = false;
 
   constructor(private readonly ngZone: NgZone) {
-    if (!this.isBrowser) {
+    if (!this.isBrowser || !this.isTimeoutEnabled) {
       return;
     }
 
@@ -39,6 +40,9 @@ export class IdleTimeoutService implements OnDestroy {
   }
 
   reset(): void {
+    if (!this.isTimeoutEnabled) {
+      return;
+    }
     const now = Date.now();
     this.lastActivityAt = now;
     this.lastUiResetAt = now;
@@ -48,6 +52,9 @@ export class IdleTimeoutService implements OnDestroy {
   }
 
   stop(): void {
+    if (!this.isTimeoutEnabled) {
+      return;
+    }
     this.isStopped = true;
     this.markActive();
     this.setWarning(false);
@@ -55,12 +62,15 @@ export class IdleTimeoutService implements OnDestroy {
   }
 
   start(): void {
+    if (!this.isTimeoutEnabled) {
+      return;
+    }
     this.isStopped = false;
     this.reset();
   }
 
   ngOnDestroy(): void {
-    if (!this.isBrowser) {
+    if (!this.isBrowser || !this.isTimeoutEnabled) {
       return;
     }
 

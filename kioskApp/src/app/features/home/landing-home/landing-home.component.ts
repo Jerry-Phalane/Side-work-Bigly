@@ -39,13 +39,13 @@ export class LandingHomeComponent {
   readonly cards: ReadonlyArray<HomeActionCard> = [
     {
       id: 'better-rewards',
-      title: 'How to',
+      title: 'See how you can',
       titleAccent: 'save big',
-      titleAfterAccent: 'with',
-      titleSuffix: 'Better Rewards',
-      subtitle: 'Find out how instant savings and discounts can stack every time you shop',
-      buttonLabel: 'Show me',
-      footerLabel: 'Get Better Rewards',
+      titleAfterAccent: 'with Better',
+      titleSuffix: 'Rewards',
+      subtitle: "Test out our Better Rewards shopping simulator and we'll prove it",
+      buttonLabel: 'Try it out',
+      footerLabel: 'Sign up for Better Rewards',
       route: '/landing-home/better-rewards',
       icon: 'local_offer',
       image: 'images/better-rewards.png',
@@ -53,30 +53,30 @@ export class LandingHomeComponent {
     },
     {
       id: 'pharmacy-queue',
-      title: 'Visit the pharmacy or join the queue (kiosk)',
-      subtitle: 'Two lines',
+      title: 'Visit the pharmacy or join the queue',
+      subtitle: "Test out our Better Rewards shopping simulator and we'll prove it",
       buttonLabel: 'Get a ticket or book a visit',
       icon: 'medical_services'
     },
     {
       id: 'dis-chem-cover',
       title: 'Get Dis-Chem cover',
-      subtitle: 'Use kiosk',
+      subtitle: "Test out our Better Rewards shopping simulator and we'll prove it",
       buttonLabel: 'See cover options',
       icon: 'favorite'
     },
     {
       id: 'learn-about-dis-chem',
       title: 'Learn about Dis-Chem',
-      subtitle: 'More info',
+      subtitle: "Test out our Better Rewards shopping simulator and we'll prove it",
       buttonLabel: 'Learn more',
       icon: 'add_box'
     },
     {
       id: 'online-store',
-      title: 'Online store',
-      subtitle: 'Shop online',
-      buttonLabel: 'Shop now',
+      title: 'Shop products',
+      subtitle: "Test out our Better Rewards shopping simulator and we'll prove it",
+      buttonLabel: 'Try it out',
       icon: 'shopping_bag'
     }
   ];

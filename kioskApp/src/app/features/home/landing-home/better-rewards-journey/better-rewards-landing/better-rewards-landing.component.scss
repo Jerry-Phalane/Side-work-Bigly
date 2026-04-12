@@ -1,6 +1,6 @@
 .better-rewards-content {
   min-height: 100dvh;
-  background: #f5f5f6;
+  background: #fff;
   padding: 0 0 clamp(20px, 2.2vh, 32px);
 }
 
@@ -9,26 +9,26 @@
   overflow: hidden;
   display: grid;
   margin-top: 0;
-  gap: clamp(18px, 2.1vh, 26px);
+  gap: clamp(22px, 2.4vh, 30px);
 }
 
 .tiles-track {
   display: flex;
   width: max-content;
-  gap: clamp(10px, 0.9vw, 14px);
+  gap: clamp(14px, 1.1vw, 18px);
 }
 
 .tiles-track-left {
-  animation: marquee-left 34s linear infinite;
+  animation: marquee-left 30s linear infinite;
 }
 
 .tiles-track-right {
-  animation: marquee-right 31s linear infinite;
+  animation: marquee-left 24s linear infinite reverse;
 }
 
 .tile {
-  width: clamp(82px, 8vw, 120px);
-  height: clamp(62px, 6vw, 90px);
+  width: clamp(106px, 9.6vw, 148px);
+  height: clamp(80px, 7.2vw, 112px);
   border-radius: 2px;
   background: #d4d4d7;
   overflow: hidden;
@@ -43,7 +43,7 @@
 }
 
 .content {
-  margin: clamp(36px, 4.6vh, 64px) auto 0;
+  margin: clamp(54px, 6vh, 80px) auto 0;
   width: min(100%, 860px);
   text-align: center;
   display: grid;
@@ -54,42 +54,80 @@
 .content h1 {
   margin: 0;
   color: #0f1114;
-  width: min(100%, 520px);
-  font-size: clamp(30px, 2.8vw, 40px);
+  width: min(100%, 610px);
+  font-size: clamp(42px, 3.3vw, 56px);
   line-height: 1.1;
   letter-spacing: -0.02em;
   font-weight: 800;
 }
 
 .content p {
-  margin: clamp(18px, 2vh, 24px) 0 0;
+  margin: clamp(22px, 2.5vh, 32px) 0 0;
   color: #6f7378;
-  width: min(100%, 820px);
-  font-size: clamp(15px, 1.3vw, 19px);
-  line-height: 1.38;
+  width: min(100%, 760px);
+  font-size: clamp(16px, 1.3vw, 22px);
+  line-height: 1.35;
   font-weight: 400;
 }
 
+.copy-line {
+  display: block;
+  text-align: center;
+}
+
+.copy-line-primary {
+  white-space: normal;
+}
+
 .content-divider {
-  margin-top: clamp(22px, 2.4vh, 30px);
-  margin-bottom: clamp(20px, 2.2vh, 28px);
-  width: clamp(210px, 20vw, 300px);
+  margin-top: clamp(26px, 2.8vh, 36px);
+  margin-bottom: clamp(22px, 2.6vh, 32px);
+  width: clamp(250px, 23vw, 350px);
   border-top: 1px solid #dddddf;
 }
 
 .cta-button.mdc-button {
   margin-top: 0;
-  min-width: clamp(138px, 11.2vw, 168px);
-  height: clamp(44px, 3.8vw, 52px);
+  min-width: clamp(220px, 15vw, 280px);
+  height: clamp(56px, 4.4vw, 68px);
   border-radius: 999px;
   --mdc-filled-button-container-color: #09a64f;
   --mdc-filled-button-label-text-color: #ffffff;
-  font-size: clamp(17px, 1.15vw, 19px);
+  font-size: clamp(21px, 1.55vw, 26px);
   font-weight: 700;
   letter-spacing: 0;
   text-transform: none;
-  padding-inline: clamp(18px, 1.7vw, 22px);
+  padding-inline: clamp(24px, 2.1vw, 30px);
   box-shadow: none;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cta-button.mdc-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(9, 166, 79, 0.32);
+  }
+
+  .cta-button.mdc-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(9, 166, 79, 0.22);
+    transition-duration: 0.1s;
+  }
+}
+
+.cta-button.mdc-button:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(9, 166, 79, 0.32);
+}
+
+@media (hover: none) {
+  .cta-button.mdc-button:active {
+    transform: scale(0.97);
+    box-shadow: 0 2px 12px rgba(9, 166, 79, 0.3);
+    transition-duration: 0.1s;
+  }
 }
 
 .cta-button .mdc-button__label {
@@ -106,25 +144,65 @@
 }
 
 .cta-icon {
-  width: 18px;
-  height: 18px;
-  font-size: 18px;
-  line-height: 18px;
+  width: 22px;
+  height: 22px;
+  font-size: 22px;
+  line-height: 22px;
 }
 
 @media (min-width: 834px) and (max-width: 1194px) {
   .better-rewards-content {
-    min-height: min(94dvh, 840px);
+    min-height: 100dvh;
+    padding-bottom: 24px;
+  }
+
+  .tiles-marquee {
+    gap: 20px;
+  }
+
+  .tiles-track {
+    gap: 12px;
+  }
+
+  .tile {
+    width: 114px;
+    height: 86px;
+  }
+
+  .content {
+    margin-top: 62px;
+    width: min(100%, 760px);
   }
 
   .content h1 {
-    width: min(100%, 500px);
-    font-size: clamp(28px, 3.1vw, 36px);
+    width: min(100%, 520px);
+    font-size: 56px;
   }
 
   .content p {
-    width: min(100%, 760px);
-    font-size: clamp(15px, 1.6vw, 18px);
+    width: min(100%, 680px);
+    font-size: 18px;
+    line-height: 1.3;
+  }
+
+  .content-divider {
+    width: 290px;
+    margin-top: 28px;
+    margin-bottom: 24px;
+  }
+
+  .cta-button.mdc-button {
+    min-width: 250px;
+    height: 62px;
+    font-size: 24px;
+    padding-inline: 30px;
+  }
+
+  .cta-icon {
+    width: 24px;
+    height: 24px;
+    font-size: 24px;
+    line-height: 24px;
   }
 }
 
@@ -135,8 +213,8 @@
   }
 
   .tile {
-    width: clamp(72px, 8.3vw, 96px);
-    height: clamp(54px, 6.4vw, 72px);
+    width: clamp(82px, 9vw, 108px);
+    height: clamp(62px, 7vw, 80px);
   }
 
   .content {
@@ -145,12 +223,22 @@
 
   .content h1 {
     width: min(100%, 420px);
-    font-size: clamp(26px, 4.1vw, 34px);
+    font-size: 42px;
   }
 
   .content p {
     width: min(100%, 640px);
-    font-size: clamp(14px, 2vw, 17px);
+    font-size: 17px;
+  }
+
+  .copy-line-primary {
+    white-space: normal;
+  }
+
+  .cta-button.mdc-button {
+    min-width: 220px;
+    height: 56px;
+    font-size: 21px;
   }
 }
 
@@ -182,6 +270,10 @@
     line-height: 1.34;
   }
 
+  .copy-line-primary {
+    white-space: normal;
+  }
+
   .content-divider {
     margin-top: clamp(18px, 2.4vh, 24px);
     margin-bottom: clamp(16px, 2.2vh, 24px);
@@ -199,6 +291,17 @@
   .tiles-track-left,
   .tiles-track-right {
     animation: none;
+  }
+
+  .cta-button.mdc-button {
+    transition: none;
+  }
+
+  .cta-button.mdc-button:hover,
+  .cta-button.mdc-button:focus-visible,
+  .cta-button.mdc-button:active {
+    transform: none;
+    box-shadow: none;
   }
 }
 

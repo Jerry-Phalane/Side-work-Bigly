@@ -1,28 +1,29 @@
 <section class="better-rewards-journey">
   <app-kiosk-top-bar
-    [showBack]="showBack"
+    [showBack]="showBack()"
     [showClose]="true"
-    [showProgressTrack]="showProgressTrack"
-    [progressPercent]="progressPercent"
+    [showSteps]="showSteps()"
+    [showProgressTrack]="showProgressTrack()"
+    [showTillSlip]="showTillSlip()"
+    [progressPercent]="progressPercent()"
     topInsetMode="compact"
-    [steps]="headerSteps"
+    [steps]="headerSteps()"
+    [tillSlipData]="tillSlipData()"
     [allowStepClick]="true"
-    [maxReachableStepIndex]="maxReachableStepIndex"
+    [maxReachableStepIndex]="maxReachableStepIndex()"
     (back)="previousStep()"
     (close)="closeJourney()"
     (stepSelected)="goToStep($event)"
   >
-    @if (currentStepIndex === 0) {
-      <app-better-rewards-landing (next)="nextStep()" />
-    }
-
-    @if (currentStepIndex === 1) {
+    @if (currentStep() === JourneyStep.BasketPicker) {
       <app-better-rewards-basket-picker
         [model]="journeyData"
         [form]="journeyForm"
         (modelChange)="onJourneyDataChange($event)"
         (next)="nextStep()"
       />
+    } @else {
+      <app-better-rewards-landing (next)="nextStep()" />
     }
   </app-kiosk-top-bar>
 </section>

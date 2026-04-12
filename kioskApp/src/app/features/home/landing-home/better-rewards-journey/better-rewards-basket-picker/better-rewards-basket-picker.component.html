@@ -18,6 +18,69 @@
     }
   </div>
 
+  @if (model.selectedBasketId) {
+    <section class="promo-panel" aria-labelledby="promo-panel-heading">
+      <h2 id="promo-panel-heading" class="promo-panel__title">Stack promos on your basket</h2>
+      <p class="promo-panel__hint">Add or remove stack offers (fixed rand or percent of remainder). Till slip updates live.</p>
+
+      <div class="promo-panel__list" role="list">
+        @for (promo of appliedStackPromos(); track promo.id) {
+          <div class="promo-row" role="listitem">
+            <div class="promo-row__text">
+              <span class="promo-row__label">{{ stackPromoListLabel(promo) }}</span>
+              <span class="promo-row__amount">{{ stackPromoAmountHint(promo) }}</span>
+            </div>
+            <button
+              type="button"
+              class="promo-row__remove"
+              (click)="removeStackPromo(promo.id)"
+              [attr.aria-label]="'Remove ' + stackPromoListLabel(promo)">
+              <mat-icon aria-hidden="true">close</mat-icon>
+            </button>
+          </div>
+        } @empty {
+          <p class="promo-panel__empty">No stack promos yet — pick one from the list below.</p>
+        }
+      </div>
+
+      <div class="promo-panel__add-block">
+        <label class="promo-panel__add-label" for="promo-add-select">Add a stack promo</label>
+        <select
+          id="promo-add-select"
+          class="promo-panel__select"
+          [disabled]="stackPromosLeftToAdd().length === 0"
+          (change)="onStackPromoSelectChange($event)">
+          <option value="" selected>Choose an offer…</option>
+          @for (promo of stackPromosLeftToAdd(); track promo.id) {
+            <option [value]="promo.id">{{ stackPromoOptionText(promo) }}</option>
+          }
+        </select>
+        @if (stackPromosLeftToAdd().length === 0) {
+          <p class="promo-panel__all-added">All stack offers are on this basket — remove one above to add another.</p>
+        }
+        <div class="promo-panel__test-row">
+          <button
+            type="button"
+            mat-stroked-button
+            class="promo-panel__random-test"
+            [disabled]="stackPromosLeftToAdd().length === 0"
+            (click)="addRandomStackPromo()">
+            Add random stack promo (test)
+          </button>
+          <button
+            type="button"
+            mat-stroked-button
+            class="promo-panel__clear-test"
+            [disabled]="appliedStackPromos().length === 0"
+            (click)="clearAllStackPromos()">
+            Clear all stack promos (test)
+          </button>
+        </div>
+        <span class="promo-panel__test-hint">Random adds one offer at a time; clear resets the stack.</span>
+      </div>
+    </section>
+  }
+
   <button type="button" class="continue-button" mat-flat-button [disabled]="!model.selectedBasketId" (click)="continue()">
     Continue
   </button>

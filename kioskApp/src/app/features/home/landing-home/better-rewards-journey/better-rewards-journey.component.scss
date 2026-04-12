@@ -1,9 +1,45 @@
 .better-rewards-journey {
   min-height: 100dvh;
-  background: #f5f5f6;
-}
+  background: #fff;
 
-.better-rewards-journey app-kiosk-top-bar {
-  display: block;
-  min-height: 100dvh;
+  app-kiosk-top-bar {
+    display: block;
+    min-height: 100dvh;
+  }
+
+  ::ng-deep {
+    .kiosk-top-row,
+    .kiosk-top-bar.compact .kiosk-top-row {
+      min-height: 92px !important;
+    }
+
+    .kiosk-top-row {
+      grid-template-columns: 82px 1fr 82px;
+      padding: 0 18px;
+    }
+
+    .icon-button {
+      width: 58px;
+      height: 58px;
+    }
+
+    .icon-button mat-icon {
+      width: 36px;
+      height: 36px;
+      font-size: 36px;
+      line-height: 36px;
+    }
+
+    .steps {
+      gap: 8px;
+      font-size: 19px;
+    }
+
+    .step-separator {
+      width: 30px;
+      height: 30px;
+      font-size: 30px;
+      line-height: 30px;
+    }
+  }
 }
