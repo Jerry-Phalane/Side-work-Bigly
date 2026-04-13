@@ -2,13 +2,19 @@ export interface TillSlipPricingState {
   orderTotalZar: number;
   rewardsDiscountZar: number;
   appliedPromoIds: string[];
+  selectedBasketTitle: string | null;
+  selectedBasketImagePath: string | null;
+  selectedBasketItemCount: string | null;
 }
 
 export function createEmptyTillSlipPricingState(): TillSlipPricingState {
   return {
     orderTotalZar: 0,
     rewardsDiscountZar: 0,
-    appliedPromoIds: []
+    appliedPromoIds: [],
+    selectedBasketTitle: null,
+    selectedBasketImagePath: null,
+    selectedBasketItemCount: null
   };
 }
 
@@ -28,11 +34,6 @@ export type TillSlipStackPromo =
     };
 
 export const TILL_SLIP_STACK_PROMOS: ReadonlyArray<TillSlipStackPromo> = [
-  { kind: 'fixedZar', id: 'multibuy', label: 'Multibuy savings', amountZar: 45 },
-  { kind: 'fixedZar', id: 'weekend', label: 'Weekend shopper', amountZar: 35 },
-  { kind: 'fixedZar', id: 'brand-bonus', label: 'Brand bonus', amountZar: 28 },
-  { kind: 'fixedZar', id: 'pharmacy-cross', label: 'Pharmacy cross-sell', amountZar: 40 },
-  { kind: 'fixedZar', id: 'member-mailer', label: 'Member mailer', amountZar: 22 }
 ];
 
 export const TILL_SLIP_POST_STACK_PERCENT_RULES: ReadonlyArray<{

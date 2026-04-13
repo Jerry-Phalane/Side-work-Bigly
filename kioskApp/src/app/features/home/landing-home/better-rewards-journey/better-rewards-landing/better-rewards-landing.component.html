@@ -3,7 +3,7 @@
     <div class="tiles-track tiles-track-left">
       @for (tile of rowOneLoopTiles; track tile.id) {
       <div class="tile">
-        <img [src]="tile.src" [alt]="tile.alt" />
+        <img [src]="tile.src" [alt]="tile.alt" decoding="async" />
       </div>
       }
     </div>
@@ -11,28 +11,23 @@
     <div class="tiles-track tiles-track-right">
       @for (tile of rowTwoLoopTiles; track tile.id) {
       <div class="tile">
-        <img [src]="tile.src" [alt]="tile.alt" />
+        <img [src]="tile.src" [alt]="tile.alt" decoding="async" />
       </div>
       }
     </div>
   </div>
 
-  <div class="content">
+  <div class="content-card">
     <h1>
-      Save more with
+      <span class="headline-accent">Save</span> really, <em>really</em> big on the
       <br />
-      Better Rewards brands
+      brands you love
     </h1>
     <p>
-      <span class="copy-line copy-line-primary">
-        We can help you save even more off our products items. Use our simulation
-      </span>
-      <span class="copy-line">to see what you can do to save more!</span>
+      Better Rewards gets you instant discounts on all your favourite brands.
+      <br />
+      Take a short shopping trip to find out how your savings stack up
     </p>
-    <div class="content-divider"></div>
-    <button type="button" class="cta-button" mat-flat-button (click)="goToNextStep()">
-      <span class="cta-label">See how you can save</span>
-      <mat-icon class="cta-icon" iconPositionEnd aria-hidden="true">arrow_forward</mat-icon>
-    </button>
+    <button type="button" class="cta-button" mat-flat-button (click)="goToNextStep()">Let's go!</button>
   </div>
 </section>

@@ -1,5 +1,15 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  signal,
+  SimpleChanges
+} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { TillSlipSpinValueComponent } from '../till-slip-spin-value/till-slip-spin-value.component';
 
 export interface KioskTopBarStep {
   label: string;
@@ -13,8 +23,13 @@ export interface KioskTopBarTillSlipPromoDetailLine {
   labelSuffix: string;
 }
 
+const TILL_SLIP_CARD_PULSE_ANIMATION_NAME = 'till-slip-card-pulse';
+
 export interface KioskTopBarTillSlipData {
   title: string;
+  basketTitle?: string;
+  basketImagePath?: string;
+  basketItemCount?: string;
   orderTotalLabel: string;
   orderTotalValue: string;
   rewardsLabel: string;
@@ -33,12 +48,12 @@ export interface KioskTopBarTillSlipData {
 @Component({
   selector: 'app-kiosk-top-bar',
   standalone: true,
-  imports: [MatIconModule],
+  imports: [MatIconModule, TillSlipSpinValueComponent],
   templateUrl: './kiosk-top-bar.component.html',
   styleUrl: './kiosk-top-bar.component.scss',
   changeDetection: ChangeDetectionStrategy.Default
 })
-export class KioskTopBarComponent {
+export class KioskTopBarComponent implements OnChanges {
   @Input() showBack = false;
   @Input() showClose = true;
   @Input() showSteps = true;
@@ -54,6 +69,58 @@ export class KioskTopBarComponent {
   @Output() readonly back = new EventEmitter<void>();
   @Output() readonly close = new EventEmitter<void>();
   @Output() readonly stepSelected = new EventEmitter<number>();
+
+  readonly cardAnimationActive = signal(false);
+  private tillSlipFingerprintPrev: string | undefined;
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['showTillSlip'] && !this.showTillSlip) {
+      this.tillSlipFingerprintPrev = undefined;
+      this.cardAnimationActive.set(false);
+      return;
+    }
+    if (!this.showTillSlip || !this.tillSlipData) {
+      return;
+    }
+    const fingerprint = this.buildTillSlipFingerprint(this.tillSlipData);
+    if (this.tillSlipFingerprintPrev === undefined) {
+      this.tillSlipFingerprintPrev = fingerprint;
+      return;
+    }
+    if (fingerprint !== this.tillSlipFingerprintPrev) {
+      this.tillSlipFingerprintPrev = fingerprint;
+      this.playTillSlipCardPulse();
+    }
+  }
+
+  private buildTillSlipFingerprint(data: KioskTopBarTillSlipData): string {
+    return [
+      data.orderTotalValue,
+      data.rewardsValue,
+      data.promoSectionTotalValue,
+      data.youPayValue,
+      data.vatValue,
+      data.youSaveValue,
+      ...data.promoDetailLines.map((line) => `${line.id}:${line.value}`)
+    ].join('\u001e');
+  }
+
+  private playTillSlipCardPulse(): void {
+    this.cardAnimationActive.set(false);
+    requestAnimationFrame(() => {
+      this.cardAnimationActive.set(true);
+    });
+  }
+
+  onTillSlipCardPulseAnimationFinished(event: AnimationEvent): void {
+    if (event.animationName !== TILL_SLIP_CARD_PULSE_ANIMATION_NAME) {
+      return;
+    }
+    if (event.target !== event.currentTarget) {
+      return;
+    }
+    this.cardAnimationActive.set(false);
+  }
 
   get clampedProgressPercent(): number {
     if (this.progressPercent < 0) {

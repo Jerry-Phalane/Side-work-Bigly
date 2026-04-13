@@ -9,7 +9,6 @@ import {
   TillSlipStackPromo,
   TILL_SLIP_POST_STACK_PERCENT_RULES
 } from './better-rewards-till-slip.config';
-import { formatZarDiscount, formatZarMoney, roundZar } from './till-slip-zar';
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +41,10 @@ export class BetterRewardsTillSlipCalculatorService {
 
     return {
       title: 'Your till slip',
-      orderTotalLabel: 'Order total',
+      basketTitle: state.selectedBasketTitle ?? undefined,
+      basketImagePath: state.selectedBasketImagePath ?? undefined,
+      basketItemCount: state.selectedBasketItemCount ?? undefined,
+      orderTotalLabel: 'Sub total',
       orderTotalValue: formatZarMoney(state.orderTotalZar),
       rewardsLabel: 'Your Better Rewards',
       rewardsValue: formatZarDiscount(state.rewardsDiscountZar),
@@ -129,4 +131,16 @@ export class BetterRewardsTillSlipCalculatorService {
     }
     return lines;
   }
+}
+
+function roundZar(value: number): number {
+  return Math.round(value * 100) / 100;
+}
+
+function formatZarMoney(amount: number): string {
+  return `R ${amount.toFixed(2)}`;
+}
+
+function formatZarDiscount(amount: number): string {
+  return `- R ${amount.toFixed(2)}`;
 }

@@ -19,11 +19,16 @@ $radius-card: 20px;
 $radius-save: 8px;
 $radius-badge: 5px;
 
+$till-slip-pulse-duration: 1.45s;
+$till-slip-pulse-ease: cubic-bezier(0.22, 1, 0.36, 1);
+$till-slip-pulse-peak-border: $kiosk-progress;
+$till-slip-pulse-scale-peak: 1.024;
+
 .kiosk-shell {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  background: #fff;
+  background: #f2f3f5;
 }
 
 .kiosk-top-bar {
@@ -158,37 +163,61 @@ $radius-badge: 5px;
 .kiosk-content {
   flex: 1 1 auto;
   min-height: 0;
+  background: #f2f3f5;
 
   &__main {
+    width: 100%;
+    min-height: 100%;
     min-width: 0;
-    min-height: 0;
+
+    > * {
+      display: block;
+      width: 100%;
+      min-height: 100%;
+    }
   }
 
   &--with-till-slip {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: start;
-    column-gap: clamp(20px, 2vw, 28px);
-    padding-right: clamp(20px, 2.2vw, 36px);
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: clamp(20px, 2vw, 28px);
+    padding: 0 clamp(20px, 2.2vw, 36px) 0 0;
+    background: #f2f3f5;
+
+    .kiosk-content__main {
+      flex: 1 1 auto;
+      min-width: 0;
+      min-height: 0;
+    }
   }
 }
 
 .till-slip {
-  width: clamp(356px, 28vw, 472px);
+  width: clamp(328px, 27vw, 392px);
   flex-shrink: 0;
-  padding-top: 76px;
+  margin-left: auto;
+  padding-top: clamp(42px, 5.2vh, 64px);
 }
 
 .till-slip-card {
   background: $kiosk-bg;
-  border: 1px solid $kiosk-border-card;
+  border: 2px solid $kiosk-border-card;
   border-radius: $radius-card;
   padding: 0;
   overflow: hidden;
   color: $kiosk-text;
+  transform-origin: center center;
+  transition:
+    border-color 240ms ease,
+    transform 240ms ease;
+
+  &--pulse {
+    animation: till-slip-card-pulse $till-slip-pulse-duration $till-slip-pulse-ease 1 both;
+  }
 
   &__body {
-    padding: 24px 22px 14px;
+    padding: 22px 20px 16px;
   }
 
   &__title {
@@ -199,8 +228,8 @@ $radius-badge: 5px;
   }
 
   &__footer {
-    background: $kiosk-till-footer;
-    padding: 18px 22px 24px;
+    background: $kiosk-bg;
+    padding: 18px 20px 18px;
 
     .till-slip-save {
       margin-top: 14px;
@@ -208,17 +237,61 @@ $radius-badge: 5px;
   }
 }
 
+.till-slip-basket-summary {
+  display: grid;
+  justify-items: start;
+  gap: 8px;
+  margin: 0 0 16px;
+
+  &__image {
+    display: block;
+    width: 136px;
+    height: auto;
+    object-fit: contain;
+    justify-self: center;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 20px;
+    line-height: 1.04;
+    font-weight: 700;
+    color: $kiosk-text;
+  }
+
+  &__count {
+    font-size: 13px;
+    line-height: 1.2;
+    color: $kiosk-text-muted;
+  }
+}
+
+@keyframes till-slip-card-pulse {
+  0% {
+    border-color: $kiosk-border-card;
+    transform: scale(1);
+  }
+  40% {
+    border-color: $till-slip-pulse-peak-border;
+    transform: scale($till-slip-pulse-scale-peak);
+  }
+  100% {
+    border-color: $kiosk-border-card;
+    transform: scale(1);
+  }
+}
+
 .till-slip-line {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: 16px;
   font-size: 16px;
   line-height: 1.45;
   min-height: 1.45em;
 
   & + & {
-    margin-top: 10px;
+    margin-top: 14px;
   }
 
   &--pay {
@@ -272,18 +345,18 @@ $radius-badge: 5px;
 }
 
 .till-slip-promo-block {
-  margin-top: 14px;
-  padding-top: 14px;
-  border-top: 1px solid $kiosk-divider;
+  margin-top: 10px;
+  padding-top: 0;
+  border-top: none;
 }
 
 .till-slip-line--promo-summary {
-  margin-bottom: 4px;
+  margin-bottom: 0;
 }
 
 .till-slip-line--promo-detail {
-  margin-top: 6px;
-  padding-left: 10px;
+  margin-top: 4px;
+  padding-left: 0;
   font-size: 15px;
 }
 
@@ -297,7 +370,7 @@ $radius-badge: 5px;
 }
 
 .till-slip-divider {
-  margin: 14px 0;
+  margin: 16px 0;
   border: none;
   border-top: 1px solid $kiosk-divider;
 }
@@ -335,15 +408,15 @@ $radius-badge: 5px;
   justify-content: space-between;
   gap: 10px;
   width: 100%;
-  min-height: 48px;
+  min-height: 54px;
   box-sizing: border-box;
   background: $kiosk-save;
   color: $kiosk-bg;
-  padding: 14px 22px;
+  padding: 14px 16px;
   font-weight: 600;
   font-size: 17px;
   border: none;
-  border-radius: 0 0 20px 0;
+  border-radius: 10px;
   cursor: pointer;
 
   &__label {
@@ -354,7 +427,7 @@ $radius-badge: 5px;
 
   &__value {
     color: $kiosk-bg;
-    font-size: 19px;
+    font-size: 24px;
     font-weight: 700;
     white-space: nowrap;
   }
@@ -379,9 +452,9 @@ $radius-badge: 5px;
   }
 
   .kiosk-content--with-till-slip {
-    grid-template-columns: 1fr;
+    flex-direction: column;
     row-gap: 14px;
-    padding-right: 0;
+    padding: 0;
   }
 
   .till-slip {

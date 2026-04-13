@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 
 interface RewardTile {
   id: string;
@@ -11,7 +10,7 @@ interface RewardTile {
 @Component({
   selector: 'app-better-rewards-landing',
   standalone: true,
-  imports: [MatButtonModule, MatIconModule],
+  imports: [MatButtonModule],
   templateUrl: './better-rewards-landing.component.html',
   styleUrl: './better-rewards-landing.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

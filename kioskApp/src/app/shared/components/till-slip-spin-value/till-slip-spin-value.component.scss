@@ -1,0 +1,21 @@
+:host {
+  display: inline-block;
+  color: inherit;
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  min-width: 0;
+  vertical-align: baseline;
+}
+
+.till-slip-spin-value__inner {
+  display: inline-block;
+  transform-origin: 50% 60%;
+  transition:
+    filter 180ms ease-out,
+    transform 180ms ease-out;
+
+  &--animating {
+    filter: brightness(1.06);
+    transform: translateY(-0.04em);
+  }
+}

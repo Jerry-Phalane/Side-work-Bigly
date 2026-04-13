@@ -1,45 +1,89 @@
 .better-rewards-journey {
   min-height: 100dvh;
-  background: #fff;
+  background: #f2f3f5;
+  padding: 0;
+  box-sizing: border-box;
+  display: block;
 
   app-kiosk-top-bar {
     display: block;
+    width: 100%;
     min-height: 100dvh;
+    margin: 0;
+    border: none;
+    background: #f2f3f5;
   }
 
   ::ng-deep {
+    .kiosk-shell {
+      min-height: 100%;
+    }
+
     .kiosk-top-row,
     .kiosk-top-bar.compact .kiosk-top-row {
-      min-height: 92px !important;
+      min-height: 70px !important;
     }
 
     .kiosk-top-row {
-      grid-template-columns: 82px 1fr 82px;
-      padding: 0 18px;
+      grid-template-columns: 64px 1fr 64px;
+      padding: 0 14px;
     }
 
     .icon-button {
-      width: 58px;
-      height: 58px;
+      width: 44px;
+      height: 44px;
     }
 
     .icon-button mat-icon {
-      width: 36px;
-      height: 36px;
-      font-size: 36px;
-      line-height: 36px;
+      width: 26px;
+      height: 26px;
+      font-size: 26px;
+      line-height: 26px;
     }
 
     .steps {
       gap: 8px;
-      font-size: 19px;
+      font-size: 16px;
+      font-weight: 600;
     }
 
     .step-separator {
-      width: 30px;
-      height: 30px;
-      font-size: 30px;
-      line-height: 30px;
+      width: 20px;
+      height: 20px;
+      font-size: 20px;
+      line-height: 20px;
+      color: #bcc0c5;
+    }
+
+    .step,
+    .step-button {
+      color: #c2c4c8;
+    }
+
+    .step.active,
+    .step-button.active {
+      color: #1a1f26;
+    }
+
+    .progress-track {
+      height: 3px;
+      background: #eceef1;
+    }
+
+    .progress-fill {
+      background: #1ea85a;
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .better-rewards-journey {
+    padding: 0;
+
+    ::ng-deep {
+      .steps {
+        font-size: 15px;
+      }
     }
   }
 }

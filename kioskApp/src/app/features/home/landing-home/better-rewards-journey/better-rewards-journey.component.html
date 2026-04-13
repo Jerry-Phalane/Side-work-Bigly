@@ -1,7 +1,7 @@
 <section class="better-rewards-journey">
   <app-kiosk-top-bar
     [showBack]="showBack()"
-    [showClose]="true"
+    [showClose]="showClose()"
     [showSteps]="showSteps()"
     [showProgressTrack]="showProgressTrack()"
     [showTillSlip]="showTillSlip()"
@@ -20,10 +20,15 @@
         [model]="journeyData"
         [form]="journeyForm"
         (modelChange)="onJourneyDataChange($event)"
-        (next)="nextStep()"
       />
-    } @else {
-      <app-better-rewards-landing (next)="nextStep()" />
+    } @else if (currentStep() === JourneyStep.VisitPharmacy) {
+      <app-better-rewards-visit-pharmacy-step (next)="nextStep()" />
+    } @else if (currentStep() === JourneyStep.ChooseCard) {
+      <app-better-rewards-choose-card-step (next)="nextStep()" />
+    } @else if (currentStep() === JourneyStep.GetCover) {
+      <app-better-rewards-get-cover-step (next)="nextStep()" />
+    } @else if (currentStep() === JourneyStep.TotalSavings) {
+      <app-better-rewards-total-savings-step />
     }
   </app-kiosk-top-bar>
 </section>

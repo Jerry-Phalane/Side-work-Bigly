@@ -57,13 +57,29 @@
 
     @if (showTillSlip) {
       <aside class="till-slip" aria-label="Till slip summary">
-        <div class="till-slip-card">
+        <div
+          class="till-slip-card"
+          [class.till-slip-card--pulse]="cardAnimationActive()"
+          (animationend)="onTillSlipCardPulseAnimationFinished($event)"
+          (animationcancel)="onTillSlipCardPulseAnimationFinished($event)">
           <div class="till-slip-card__body">
-            <h2 class="till-slip-card__title">{{ tillSlipData.title }}</h2>
+            @if (tillSlipData.basketTitle && tillSlipData.basketImagePath) {
+              <div class="till-slip-basket-summary">
+                <img class="till-slip-basket-summary__image" [src]="tillSlipData.basketImagePath" alt="" />
+                <h2 class="till-slip-basket-summary__title">{{ tillSlipData.basketTitle }}</h2>
+                @if (tillSlipData.basketItemCount) {
+                  <span class="till-slip-basket-summary__count">{{ tillSlipData.basketItemCount }}</span>
+                }
+              </div>
+            } @else {
+              <h2 class="till-slip-card__title">{{ tillSlipData.title }}</h2>
+            }
 
             <div class="till-slip-line">
               <span class="till-slip-line__label till-slip-line__label--muted">{{ tillSlipData.orderTotalLabel }}</span>
-              <strong class="till-slip-line__value">{{ tillSlipData.orderTotalValue }}</strong>
+              <strong class="till-slip-line__value">
+                <app-till-slip-spin-value [value]="tillSlipData.orderTotalValue" />
+              </strong>
             </div>
 
             <div class="till-slip-divider" role="presentation"></div>
@@ -73,13 +89,17 @@
                 <span class="till-slip-rewards__badge">+B</span>
                 <span class="till-slip-rewards__name">{{ tillSlipData.rewardsLabel }}</span>
               </div>
-              <strong class="till-slip-line__value">{{ tillSlipData.rewardsValue }}</strong>
+              <strong class="till-slip-line__value">
+                <app-till-slip-spin-value [value]="tillSlipData.rewardsValue" />
+              </strong>
             </div>
 
             <div class="till-slip-promo-block">
               <div class="till-slip-line till-slip-line--promo-summary">
                 <span class="till-slip-line__label till-slip-line__label--muted">{{ tillSlipData.promoSectionTitle }}</span>
-                <strong class="till-slip-line__value">{{ tillSlipData.promoSectionTotalValue }}</strong>
+                <strong class="till-slip-line__value">
+                  <app-till-slip-spin-value [value]="tillSlipData.promoSectionTotalValue" />
+                </strong>
               </div>
               @for (line of tillSlipData.promoDetailLines; track line.id) {
                 <div class="till-slip-line till-slip-line--promo-detail">
@@ -90,7 +110,9 @@
                       {{ line.labelSuffix }}
                     }
                   </span>
-                  <span class="till-slip-line__value till-slip-line__value--muted">{{ line.value }}</span>
+                  <span class="till-slip-line__value till-slip-line__value--muted">
+                    <app-till-slip-spin-value [value]="line.value" />
+                  </span>
                 </div>
               }
             </div>
@@ -99,7 +121,9 @@
           <div class="till-slip-card__footer">
             <div class="till-slip-line till-slip-line--pay">
               <span class="till-slip-line__pay-label">{{ tillSlipData.youPayLabel }}</span>
-              <strong class="till-slip-line__pay-value">{{ tillSlipData.youPayValue }}</strong>
+              <strong class="till-slip-line__pay-value">
+                <app-till-slip-spin-value [value]="tillSlipData.youPayValue" />
+              </strong>
             </div>
 
             <div class="till-slip-line">
@@ -107,13 +131,15 @@
                 {{ tillSlipData.vatLabel }}
               </span>
               <span class="till-slip-line__value till-slip-line__value--muted till-slip-line__value--small">
-                {{ tillSlipData.vatValue }}
+                <app-till-slip-spin-value [value]="tillSlipData.vatValue" />
               </span>
             </div>
 
             <button type="button" class="till-slip-save">
               <span class="till-slip-save__label">{{ tillSlipData.youSaveLabel }}</span>
-              <strong class="till-slip-save__value">{{ tillSlipData.youSaveValue }}</strong>
+              <strong class="till-slip-save__value">
+                <app-till-slip-spin-value [value]="tillSlipData.youSaveValue" />
+              </strong>
             </button>
           </div>
         </div>

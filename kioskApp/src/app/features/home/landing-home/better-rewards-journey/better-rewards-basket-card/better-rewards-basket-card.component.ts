@@ -11,7 +11,7 @@ export class BetterRewardsBasketCardComponent {
   @Input() title = '';
   @Input() price = '';
   @Input() itemCount = '';
-  @Input() imagePaths: ReadonlyArray<string> = [];
+  @Input() imagePath = '';
   @Input() selected = false;
   @Output() readonly selectedChange = new EventEmitter<void>();
 

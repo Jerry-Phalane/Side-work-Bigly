@@ -1,14 +1,11 @@
 <button type="button" class="basket-card" [class.selected]="selected" (click)="selectCard()">
-  <div class="basket-placeholders" aria-hidden="true">
-    @for (imagePath of imagePaths; track imagePath) {
-      <span class="placeholder-cell">
-        <img class="placeholder-image" [src]="imagePath" alt="" />
-      </span>
-    }
+  <div class="basket-media" aria-hidden="true">
+    <span class="basket-badge">+B</span>
+    <div class="basket-media-strip">
+      <img class="basket-media-image" [src]="imagePath" alt="" />
+    </div>
   </div>
   <span class="basket-title">{{ title }}</span>
-  <div class="basket-meta">
-    <span>{{ price }}</span>
-    <span>{{ itemCount }}</span>
-  </div>
+  <span class="basket-item-count">{{ itemCount }}</span>
+  <span class="basket-price">{{ price }}</span>
 </button>
