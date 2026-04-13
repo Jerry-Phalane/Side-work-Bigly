@@ -83,8 +83,12 @@ export class KioskTopBarComponent implements OnChanges {
       return;
     }
     const fingerprint = this.buildTillSlipFingerprint(this.tillSlipData);
+    const becameVisible = changes['showTillSlip'] && this.showTillSlip;
     if (this.tillSlipFingerprintPrev === undefined) {
       this.tillSlipFingerprintPrev = fingerprint;
+      if (becameVisible) {
+        this.playTillSlipCardPulse();
+      }
       return;
     }
     if (fingerprint !== this.tillSlipFingerprintPrev) {
@@ -95,6 +99,9 @@ export class KioskTopBarComponent implements OnChanges {
 
   private buildTillSlipFingerprint(data: KioskTopBarTillSlipData): string {
     return [
+      data.basketTitle ?? '',
+      data.basketImagePath ?? '',
+      data.basketItemCount ?? '',
       data.orderTotalValue,
       data.rewardsValue,
       data.promoSectionTotalValue,
