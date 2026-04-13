@@ -5,7 +5,7 @@ import { isPlatformBrowser } from '@angular/common';
 export class IdleTimeoutService implements OnDestroy {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly isBrowser = isPlatformBrowser(this.platformId);
-  private readonly isTimeoutEnabled = false;
+  private readonly isTimeoutEnabled = true;
   private readonly idleThresholdSeconds = 30;
   private readonly warningThresholdSeconds = 10;
   private readonly activityThrottleMs = 300;

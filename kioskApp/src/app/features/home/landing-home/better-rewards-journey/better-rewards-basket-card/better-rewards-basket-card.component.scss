@@ -1,5 +1,5 @@
 .basket-card {
-  border: 1px solid #e2e4e7;
+  border: 1px solid var(--border-primary-floor-2-elevated, #B2B9B561);
   border-radius: 14px;
   background: #ffffff;
   padding: 12px;
@@ -20,6 +20,18 @@
 .basket-card.selected {
   border-color: #18a85a;
   box-shadow: 0 0 0 2px #d7efde;
+  animation: basket-card-border-pulse 320ms ease-out 1;
+}
+
+@keyframes basket-card-border-pulse {
+  0% {
+    border-color: var(--border-primary-floor-2-elevated, #B2B9B561);
+    box-shadow: 0 0 0 0 #d7efde;
+  }
+  100% {
+    border-color: #18a85a;
+    box-shadow: 0 0 0 2px #d7efde;
+  }
 }
 
 .basket-media {

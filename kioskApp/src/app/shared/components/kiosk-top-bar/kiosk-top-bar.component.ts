@@ -123,13 +123,7 @@ export class KioskTopBarComponent implements OnChanges {
   }
 
   get clampedProgressPercent(): number {
-    if (this.progressPercent < 0) {
-      return 0;
-    }
-    if (this.progressPercent > 100) {
-      return 100;
-    }
-    return this.progressPercent;
+    return Math.min(100, Math.max(0, this.progressPercent));
   }
 
   onBack(): void {

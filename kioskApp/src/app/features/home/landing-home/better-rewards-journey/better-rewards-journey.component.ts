@@ -18,14 +18,6 @@ enum JourneyStep {
   TotalSavings = 'total-savings'
 }
 
-interface StepUiConfig {
-  showBack: boolean;
-  showClose: boolean;
-  showSteps: boolean;
-  showProgressTrack: boolean;
-  showTillSlip: boolean;
-}
-
 @Component({
   selector: 'app-better-rewards-journey',
   standalone: true,
@@ -45,30 +37,6 @@ export class BetterRewardsJourneyComponent implements OnInit, OnDestroy {
   private readonly router = inject(Router);
   private readonly tillSlipPricingStore = inject(BetterRewardsTillSlipPricingStore);
   private readonly defaultStep = JourneyStep.BasketPicker;
-  private readonly stepUiDefaults: Readonly<StepUiConfig> = {
-    showBack: true,
-    showClose: true,
-    showSteps: true,
-    showProgressTrack: true,
-    showTillSlip: false
-  };
-  private readonly stepUiConfigByStep: Readonly<Record<JourneyStep, StepUiConfig>> = {
-    [JourneyStep.BasketPicker]: {
-      ...this.stepUiDefaults
-    },
-    [JourneyStep.VisitPharmacy]: {
-      ...this.stepUiDefaults
-    },
-    [JourneyStep.ChooseCard]: {
-      ...this.stepUiDefaults
-    },
-    [JourneyStep.GetCover]: {
-      ...this.stepUiDefaults
-    },
-    [JourneyStep.TotalSavings]: {
-      ...this.stepUiDefaults
-    }
-  };
 
   readonly currentStepIndex = signal(0);
   readonly selectedBasketId = signal<string | null>(null);
@@ -99,16 +67,15 @@ export class BetterRewardsJourneyComponent implements OnInit, OnDestroy {
   };
 
   readonly currentStep = computed<JourneyStep>(() => this.stepOrder[this.currentStepIndex()] ?? this.defaultStep);
-  readonly currentStepUiConfig = computed<StepUiConfig>(() => this.stepUiConfigByStep[this.currentStep()]);
-  readonly showBack = computed<boolean>(() => this.currentStepUiConfig().showBack);
-  readonly showClose = computed<boolean>(() => this.currentStepUiConfig().showClose);
-  readonly showSteps = computed<boolean>(() => this.currentStepUiConfig().showSteps);
-  readonly showProgressTrack = computed<boolean>(() => this.currentStepUiConfig().showProgressTrack);
+  readonly showBack = computed<boolean>(() => true);
+  readonly showClose = computed<boolean>(() => true);
+  readonly showSteps = computed<boolean>(() => true);
+  readonly showProgressTrack = computed<boolean>(() => true);
   readonly showTillSlip = computed<boolean>(() => {
     if (this.currentStep() === JourneyStep.BasketPicker) {
       return this.selectedBasketId() !== null;
     }
-    return this.currentStepUiConfig().showTillSlip;
+    return false;
   });
   readonly progressPercent = computed<number>(() => this.stepProgressPercents[this.currentStepIndex()] ?? 0);
   readonly headerSteps = computed<ReadonlyArray<KioskTopBarStep>>(() =>
@@ -135,6 +102,10 @@ export class BetterRewardsJourneyComponent implements OnInit, OnDestroy {
   previousStep(): void {
     const currentStepIndex = this.currentStepIndex();
     if (currentStepIndex === 0) {
+      if (this.currentStep() === JourneyStep.BasketPicker && this.selectedBasketId() !== null) {
+        this.clearBasketSelection();
+        return;
+      }
       this.closeJourney();
       return;
     }
@@ -164,5 +135,12 @@ export class BetterRewardsJourneyComponent implements OnInit, OnDestroy {
     this.journeyData = model;
     this.selectedBasketId.set(model.selectedBasketId);
     this.journeyForm.patchValue({ selectedBasketId: model.selectedBasketId }, { emitEvent: false });
+  }
+
+  private clearBasketSelection(): void {
+    this.journeyData = { ...this.journeyData, selectedBasketId: null };
+    this.selectedBasketId.set(null);
+    this.journeyForm.patchValue({ selectedBasketId: null }, { emitEvent: false });
+    this.tillSlipPricingStore.reset();
   }
 }

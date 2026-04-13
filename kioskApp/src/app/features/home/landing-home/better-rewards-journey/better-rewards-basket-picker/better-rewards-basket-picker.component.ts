@@ -28,7 +28,7 @@ type JourneyFormGroup = FormGroup<{
 })
 export class BetterRewardsBasketPickerComponent implements OnChanges {
   private readonly tillSlipPricingStore = inject(BetterRewardsTillSlipPricingStore);
-  readonly savingsScreenImagePath = '/images/better-rewards.png';
+  readonly savingsScreenImagePath = '/assets/images/better-rewards.png';
   readonly tillSlipDisplay = this.tillSlipPricingStore.tillSlipDisplay;
 
   readonly baskets: ReadonlyArray<BasketOption> = [
@@ -63,6 +63,7 @@ export class BetterRewardsBasketPickerComponent implements OnChanges {
   @Input({ required: true }) model!: BetterRewardsJourneyData;
   @Input() form?: JourneyFormGroup;
   @Output() readonly modelChange = new EventEmitter<BetterRewardsJourneyData>();
+  @Output() readonly next = new EventEmitter<void>();
 
   get hasSelectedBasket(): boolean {
     return this.model.selectedBasketId !== null;
@@ -96,6 +97,10 @@ export class BetterRewardsBasketPickerComponent implements OnChanges {
 
   basketPriceLabel(basket: BasketOption): string {
     return `R ${basket.orderTotalZar.toFixed(2)}`;
+  }
+
+  onSeeMoreWaysToSave(): void {
+    this.next.emit();
   }
 
   private syncTillSlipPricing(basketId: string): void {

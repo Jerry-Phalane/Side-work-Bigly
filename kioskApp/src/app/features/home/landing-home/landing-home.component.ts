@@ -48,7 +48,7 @@ export class LandingHomeComponent {
       footerLabel: 'Get Better Rewards',
       route: '/landing-home/better-rewards',
       icon: 'local_offer',
-      image: 'images/better-rewards.png',
+      image: '/assets/images/better-rewards.png',
       featured: true
     },
     {

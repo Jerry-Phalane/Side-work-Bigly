@@ -20,8 +20,4 @@ export class BetterRewardsTillSlipPricingStore {
   reset(): void {
     this.pricingSignal.set(createEmptyTillSlipPricingState());
   }
-
-  updatePricing(mutator: (current: TillSlipPricingState) => TillSlipPricingState): void {
-    this.pricingSignal.update(mutator);
-  }
 }

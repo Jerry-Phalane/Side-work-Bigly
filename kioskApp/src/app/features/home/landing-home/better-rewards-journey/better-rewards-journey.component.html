@@ -20,6 +20,7 @@
         [model]="journeyData"
         [form]="journeyForm"
         (modelChange)="onJourneyDataChange($event)"
+        (next)="nextStep()"
       />
     } @else if (currentStep() === JourneyStep.VisitPharmacy) {
       <app-better-rewards-visit-pharmacy-step (next)="nextStep()" />
