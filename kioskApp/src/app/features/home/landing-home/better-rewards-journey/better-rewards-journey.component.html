@@ -29,7 +29,7 @@
     } @else if (currentStep() === JourneyStep.GetCover) {
       <app-better-rewards-get-cover-step (next)="nextStep()" />
     } @else if (currentStep() === JourneyStep.TotalSavings) {
-      <app-better-rewards-total-savings-step />
+      <app-better-rewards-total-savings-step (startAgain)="restartJourney()" (close)="closeJourney()" />
     }
   </app-kiosk-top-bar>
 </section>

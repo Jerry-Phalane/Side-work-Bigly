@@ -4,10 +4,12 @@ import {
   KioskTopBarTillSlipPromoDetailLine
 } from '../../../../shared/components/kiosk-top-bar/kiosk-top-bar.component';
 import {
+  BETTER_REWARDS_PROMO_IDS,
+  normalizeAppliedPromoIds,
   resolveStackPromoIds,
+  setAppliedPromoEnabled,
   TillSlipPricingState,
-  TillSlipStackPromo,
-  TILL_SLIP_POST_STACK_PERCENT_RULES
+  TillSlipStackPromo
 } from './better-rewards-till-slip.config';
 
 @Injectable({
@@ -17,11 +19,56 @@ export class BetterRewardsTillSlipCalculatorService {
   private readonly vatInclusiveRate = 0.15;
 
   toDisplay(state: TillSlipPricingState): KioskTopBarTillSlipData {
-    const applied = resolveStackPromoIds(state.appliedPromoIds);
+    const pricing = this.calculatePricing(state);
+
+    return {
+      title: 'Your till slip',
+      basketTitle: state.selectedBasketTitle ?? undefined,
+      basketImagePath: state.selectedBasketImagePath ?? undefined,
+      basketItemCount: state.selectedBasketItemCount ?? undefined,
+      orderTotalLabel: 'Sub total',
+      orderTotalValue: formatZarMoney(state.orderTotalZar),
+      rewardsLabel: 'Your Better Rewards',
+      rewardsValue: formatZarDiscount(state.rewardsDiscountZar),
+      promoSectionTitle: 'Promos',
+      promoSectionTotalValue: formatZarDiscount(pricing.promoSectionTotalZar),
+      promoDetailLines: pricing.promoDetailLines,
+      youPayLabel: 'You pay',
+      youPayValue: formatZarMoney(pricing.youPayZar),
+      vatLabel: 'Including VAT (15%)',
+      vatValue: formatZarMoney(pricing.vatPortionZar),
+      youSaveLabel: 'You save',
+      youSaveValue: formatZarMoney(pricing.youSaveZar)
+    };
+  }
+
+  estimatePromoSavings(state: TillSlipPricingState, promoId: string): number {
+    const enabledState: TillSlipPricingState = {
+      ...state,
+      appliedPromoIds: setAppliedPromoEnabled(state.appliedPromoIds, promoId, true)
+    };
+    const disabledState: TillSlipPricingState = {
+      ...state,
+      appliedPromoIds: setAppliedPromoEnabled(state.appliedPromoIds, promoId, false)
+    };
+    const withPromo = this.calculatePricing(enabledState);
+    const withoutPromo = this.calculatePricing(disabledState);
+    return roundZar(Math.max(0, withoutPromo.youPayZar - withPromo.youPayZar));
+  }
+
+  private calculatePricing(state: TillSlipPricingState): {
+    promoSectionTotalZar: number;
+    promoDetailLines: KioskTopBarTillSlipPromoDetailLine[];
+    youPayZar: number;
+    vatPortionZar: number;
+    youSaveZar: number;
+  } {
+    const normalizedAppliedPromoIds = normalizeAppliedPromoIds(state.appliedPromoIds);
+    const applied = resolveStackPromoIds(normalizedAppliedPromoIds);
     const afterRewards = roundZar(Math.max(0, state.orderTotalZar - state.rewardsDiscountZar));
     const { stackDiscountZar, promoDetailLinesBeforePercent } = this.applyStackPromos(applied, afterRewards);
     const afterStack = roundZar(Math.max(0, afterRewards - stackDiscountZar));
-    const postStackLines = this.applyPostStackPercentRules(afterStack);
+    const postStackLines = this.applyPostStackPercentRules(afterStack, normalizedAppliedPromoIds);
     const postStackDiscountZar = roundZar(postStackLines.reduce((sum, line) => sum + line.amountZar, 0));
     const youPayZar = roundZar(Math.max(0, afterStack - postStackDiscountZar));
     const youSaveZar = roundZar(Math.max(0, state.orderTotalZar - youPayZar));
@@ -40,23 +87,11 @@ export class BetterRewardsTillSlipCalculatorService {
     ];
 
     return {
-      title: 'Your till slip',
-      basketTitle: state.selectedBasketTitle ?? undefined,
-      basketImagePath: state.selectedBasketImagePath ?? undefined,
-      basketItemCount: state.selectedBasketItemCount ?? undefined,
-      orderTotalLabel: 'Sub total',
-      orderTotalValue: formatZarMoney(state.orderTotalZar),
-      rewardsLabel: 'Your Better Rewards',
-      rewardsValue: formatZarDiscount(state.rewardsDiscountZar),
-      promoSectionTitle: 'Promos',
-      promoSectionTotalValue: formatZarDiscount(promoSectionTotalZar),
+      promoSectionTotalZar,
       promoDetailLines,
-      youPayLabel: 'You pay',
-      youPayValue: formatZarMoney(youPayZar),
-      vatLabel: 'Including VAT (15%)',
-      vatValue: formatZarMoney(vatPortionZar),
-      youSaveLabel: 'You save',
-      youSaveValue: formatZarMoney(youSaveZar)
+      youPayZar,
+      vatPortionZar,
+      youSaveZar
     };
   }
 
@@ -108,15 +143,24 @@ export class BetterRewardsTillSlipCalculatorService {
     };
   }
 
-  private applyPostStackPercentRules(remainder: number): ReadonlyArray<{
+  private applyPostStackPercentRules(remainder: number, appliedPromoIds: ReadonlyArray<string>): ReadonlyArray<{
     id: string;
     amountZar: number;
     boldPrefix: string;
     labelSuffix: string;
   }> {
+    const hasInsuranceBoost = appliedPromoIds.includes(BETTER_REWARDS_PROMO_IDS.insuranceBoost);
+    const rules: ReadonlyArray<{ id: string; rate: number; boldPrefix: string; labelSuffix: string }> = [
+      {
+        id: 'base-discount',
+        rate: hasInsuranceBoost ? 0.2 : 0.1,
+        boldPrefix: hasInsuranceBoost ? '20%' : '10%',
+        labelSuffix: ' Base Discount'
+      }
+    ];
     let running = remainder;
     const lines: { id: string; amountZar: number; boldPrefix: string; labelSuffix: string }[] = [];
-    for (const rule of TILL_SLIP_POST_STACK_PERCENT_RULES) {
+    for (const rule of rules) {
       const amountZar = roundZar(running * rule.rate);
       if (amountZar <= 0) {
         continue;
@@ -125,8 +169,8 @@ export class BetterRewardsTillSlipCalculatorService {
       lines.push({
         id: rule.id,
         amountZar,
-        boldPrefix: rule.lineBoldPrefix,
-        labelSuffix: rule.lineSuffix
+        boldPrefix: rule.boldPrefix,
+        labelSuffix: rule.labelSuffix
       });
     }
     return lines;

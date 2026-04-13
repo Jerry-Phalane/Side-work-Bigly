@@ -1,5 +1,26 @@
-<section class="journey-step">
-  <h2>Visit the pharmacy</h2>
-  <p>Continue to move to the next step in your Better Rewards journey.</p>
-  <button type="button" class="continue-button" mat-flat-button (click)="continue()">Continue</button>
+<section class="visit-pharmacy-step">
+  <div class="visit-pharmacy-step__content">
+    <div class="visit-pharmacy-step__illustration" aria-hidden="true">
+      <div class="visit-pharmacy-step__shape visit-pharmacy-step__shape--panel"></div>
+      <div class="visit-pharmacy-step__shape visit-pharmacy-step__shape--bottle"></div>
+      <div class="visit-pharmacy-step__shape visit-pharmacy-step__shape--jar"></div>
+    </div>
+
+    <h2>Do you need medicine today?</h2>
+    <p class="visit-pharmacy-step__copy">
+      If you bring a script or buy medicine from the pharmacy
+      <br />
+      you get another 5% off for 30 days
+    </p>
+    <p class="visit-pharmacy-step__note">Keep in mind that this discount is for your basket items, not medication</p>
+
+    <div class="visit-pharmacy-step__actions">
+      <button type="button" class="visit-pharmacy-step__action visit-pharmacy-step__action--primary" mat-flat-button (click)="saveByGettingMeds()">
+        Save {{ saveAmountLabel() }} by getting meds
+      </button>
+      <button type="button" class="visit-pharmacy-step__action visit-pharmacy-step__action--secondary" mat-stroked-button (click)="notToday()">
+        Not today
+      </button>
+    </div>
+  </div>
 </section>

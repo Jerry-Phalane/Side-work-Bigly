@@ -75,7 +75,12 @@ export class BetterRewardsJourneyComponent implements OnInit, OnDestroy {
     if (this.currentStep() === JourneyStep.BasketPicker) {
       return this.selectedBasketId() !== null;
     }
-    return false;
+    return (
+      this.currentStep() === JourneyStep.VisitPharmacy ||
+      this.currentStep() === JourneyStep.ChooseCard ||
+      this.currentStep() === JourneyStep.GetCover ||
+      this.currentStep() === JourneyStep.TotalSavings
+    );
   });
   readonly progressPercent = computed<number>(() => this.stepProgressPercents[this.currentStepIndex()] ?? 0);
   readonly headerSteps = computed<ReadonlyArray<KioskTopBarStep>>(() =>
@@ -97,6 +102,10 @@ export class BetterRewardsJourneyComponent implements OnInit, OnDestroy {
   closeJourney(): void {
     this.tillSlipPricingStore.reset();
     this.router.navigate(['/landing-home']);
+  }
+
+  restartJourney(): void {
+    this.resetJourneyState();
   }
 
   previousStep(): void {
@@ -141,6 +150,17 @@ export class BetterRewardsJourneyComponent implements OnInit, OnDestroy {
     this.journeyData = { ...this.journeyData, selectedBasketId: null };
     this.selectedBasketId.set(null);
     this.journeyForm.patchValue({ selectedBasketId: null }, { emitEvent: false });
+    this.tillSlipPricingStore.reset();
+  }
+
+  private resetJourneyState(): void {
+    this.currentStepIndex.set(0);
+    this.maxReachableStepIndex.set(0);
+    this.journeyData = { selectedBasketId: null };
+    this.selectedBasketId.set(null);
+    this.journeyForm.reset({ selectedBasketId: null }, { emitEvent: false });
+    this.journeyForm.markAsPristine();
+    this.journeyForm.markAsUntouched();
     this.tillSlipPricingStore.reset();
   }
 }

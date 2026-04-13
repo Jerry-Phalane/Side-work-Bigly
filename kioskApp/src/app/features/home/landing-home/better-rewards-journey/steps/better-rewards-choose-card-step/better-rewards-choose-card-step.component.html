@@ -1,5 +1,50 @@
-<section class="journey-step">
-  <h2>Choose a card</h2>
-  <p>Continue to move to the next step in your Better Rewards journey.</p>
-  <button type="button" class="continue-button" mat-flat-button (click)="continue()">Continue</button>
+<section class="choose-card-step">
+  <div class="choose-card-step__content" [class.choose-card-step__content--momentum]="showMomentumPrompt()">
+    @if (!showMomentumPrompt()) {
+      <div class="choose-card-step__illustration" aria-hidden="true">
+        <div class="choose-card-step__card">
+          <span class="choose-card-step__card-chip"></span>
+          <span class="choose-card-step__card-logo"></span>
+        </div>
+        <div class="choose-card-step__card-shadow"></div>
+      </div>
+
+      <h2>Do you have a Capitec card?</h2>
+      <p class="choose-card-step__copy">
+        If you link your Capitec card to Dis-Chem you get 5% off
+        <br />
+        Better Rewards discounts. Nice!
+      </p>
+
+      <div class="choose-card-step__actions">
+        <button type="button" class="choose-card-step__action choose-card-step__action--primary" mat-flat-button (click)="saveWithCapitec()">
+          Save {{ capitecSaveLabel() }} with a Capitec card
+        </button>
+        <button type="button" class="choose-card-step__action choose-card-step__action--secondary" mat-stroked-button (click)="noCapitec()">
+          I don't have one
+        </button>
+      </div>
+    } @else {
+      <div class="choose-card-step__momentum-logo" aria-hidden="true">
+        <span class="choose-card-step__momentum-word">momentum</span>
+        <span class="choose-card-step__momentum-script">multiply</span>
+      </div>
+
+      <h2>Got a Momentum Multiply<br />card?</h2>
+      <p class="choose-card-step__copy">
+        You can also swipe your Momentum Multiply card
+        <br />
+        for another 5% off Better Rewards discounts
+      </p>
+
+      <div class="choose-card-step__actions" [class.choose-card-step__actions--momentum]="showMomentumPrompt()">
+        <button type="button" class="choose-card-step__action choose-card-step__action--primary" mat-flat-button (click)="saveWithMomentum()">
+          Save {{ momentumSaveLabel() }} more with Momentum
+        </button>
+        <button type="button" class="choose-card-step__action choose-card-step__action--secondary" mat-stroked-button (click)="noMomentum()">
+          I don't have one
+        </button>
+      </div>
+    }
+  </div>
 </section>

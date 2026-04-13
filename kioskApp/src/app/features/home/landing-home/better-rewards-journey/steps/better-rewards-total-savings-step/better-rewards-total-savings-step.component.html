@@ -1,4 +1,27 @@
-<section class="journey-step">
-  <h2>Total savings</h2>
-  <p>Your Better Rewards journey is complete.</p>
+<section class="total-savings-step">
+  <div class="total-savings-step__content">
+    <img class="total-savings-step__image" [src]="heroImagePath()" alt="" />
+
+    <h2>
+      You saved a total of
+      <span>{{ totalSavedValue() }}</span>
+    </h2>
+
+    <p>
+      See how all the promos and discounts stack up?
+      <br />
+      With Better Rewards, these savings can be yours!
+    </p>
+
+    <div class="total-savings-step__actions">
+      <button type="button" class="total-savings-step__action total-savings-step__action--primary" mat-flat-button (click)="onJoinBetterRewards()">
+        Join Better Rewards for free
+      </button>
+      <button type="button" class="total-savings-step__action total-savings-step__action--secondary" mat-stroked-button (click)="onSeeFinancialAdvisor()">
+        See a financial advisor
+      </button>
+    </div>
+
+    <button type="button" class="total-savings-step__start-again" (click)="onStartAgain()">Start again</button>
+  </div>
 </section>

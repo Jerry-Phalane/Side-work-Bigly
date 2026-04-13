@@ -1,37 +1,153 @@
-.journey-step {
+.choose-card-step {
   min-height: calc(100dvh - 76px);
-  background: #eff0f2;
-  padding: clamp(32px, 4vh, 44px) 24px 32px;
+  height: 100%;
+  background: #f2f3f5;
   display: grid;
-  align-content: center;
-  justify-items: center;
+  align-content: start;
+  padding: clamp(54px, 7vh, 88px) clamp(26px, 3.6vw, 52px) clamp(32px, 4.6vh, 56px) clamp(72px, 7.8vw, 126px);
+}
+
+.choose-card-step__content {
+  width: min(100%, 760px);
+  display: grid;
+  justify-items: start;
   gap: 14px;
-  text-align: center;
+}
+
+.choose-card-step__content--momentum {
+  width: min(100%, 720px);
+  gap: 10px;
+}
+
+.choose-card-step__illustration {
+  width: clamp(220px, 20vw, 304px);
+  height: clamp(154px, 16vw, 224px);
+  position: relative;
+  margin-bottom: clamp(22px, 2.6vh, 34px);
+}
+
+.choose-card-step__card {
+  width: 164px;
+  height: 246px;
+  border-radius: 16px;
+  background: linear-gradient(165deg, #2f2f31 0%, #161719 78%);
+  transform: rotate(-18deg);
+  box-shadow: 0 18px 20px rgba(0, 0, 0, 0.3);
+  position: absolute;
+  left: 20px;
+  top: -4px;
+}
+
+.choose-card-step__card-chip {
+  position: absolute;
+  top: 24px;
+  right: 22px;
+  width: 26px;
+  height: 20px;
+  border-radius: 4px;
+  background: #cfa84f;
+}
+
+.choose-card-step__card-logo {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  width: 30px;
+  height: 20px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #f5a400 0 50%, #d83645 50% 100%);
+}
+
+.choose-card-step__card-shadow {
+  position: absolute;
+  width: 176px;
+  height: 24px;
+  left: 48px;
+  bottom: 6px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.2);
+  filter: blur(4px);
+}
+
+.choose-card-step__momentum-logo {
+  margin-top: 16px;
+  margin-bottom: clamp(22px, 2.6vh, 34px);
+  display: grid;
+  justify-items: start;
+  gap: 4px;
+}
+
+.choose-card-step__momentum-word {
+  color: #d02631;
+  text-transform: lowercase;
+  letter-spacing: 0.08em;
+  font-size: clamp(24px, 1.6vw, 32px);
+  line-height: 1;
+  font-weight: 500;
+}
+
+.choose-card-step__momentum-script {
+  color: #d02631;
+  text-transform: lowercase;
+  font-size: clamp(62px, 4.3vw, 84px);
+  line-height: 0.8;
+  font-style: italic;
+  font-family: 'Segoe Script', 'Brush Script MT', cursive;
+  font-weight: 400;
 }
 
 h2 {
   margin: 0;
-  font-size: clamp(40px, 3.2vw, 54px);
-  line-height: 1.08;
+  color: #131722;
+  font-size: clamp(38px, 3.6vw, 56px);
+  line-height: 1.12;
   font-weight: 700;
-  color: #111320;
 }
 
-p {
+.choose-card-step__copy {
   margin: 0;
-  color: #7f838b;
-  font-size: clamp(17px, 1.2vw, 22px);
-  line-height: 1.3;
+  color: #616771;
+  font-size: clamp(20px, 1.45vw, 30px);
+  line-height: 1.32;
 }
 
-.continue-button.mdc-button {
+.choose-card-step__content--momentum .choose-card-step__copy {
+  color: #686d75;
+  font-size: clamp(18px, 1.2vw, 34px);
+}
+
+.choose-card-step__actions {
   margin-top: 8px;
-  min-width: clamp(170px, 12vw, 208px);
-  height: clamp(46px, 4vw, 56px);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.choose-card-step__actions--momentum {
+  margin-top: 14px;
+}
+
+.choose-card-step__action.mdc-button {
   border-radius: 999px;
-  --mdc-filled-button-container-color: #09a64f;
-  --mdc-filled-button-label-text-color: #ffffff;
   text-transform: none;
-  font-weight: 700;
-  font-size: clamp(16px, 1.1vw, 20px);
+  font-weight: 400;
+  height: clamp(48px, 4.1vw, 58px);
+  padding-inline: clamp(24px, 1.8vw, 32px);
+  font-size: clamp(16px, 1.06vw, 20px);
+}
+
+.choose-card-step__actions--momentum .choose-card-step__action.mdc-button {
+  height: clamp(46px, 3.6vw, 54px);
+  font-size: clamp(14px, 0.96vw, 18px);
+}
+
+.choose-card-step__action--primary.mdc-button {
+  --mdc-filled-button-container-color: #18a650;
+  --mdc-filled-button-label-text-color: #ffffff;
+}
+
+.choose-card-step__action--secondary.mdc-button {
+  --mdc-outlined-button-outline-color: #2ca85a;
+  --mdc-outlined-button-label-text-color: #2ca85a;
+  min-width: clamp(174px, 10.8vw, 214px);
 }

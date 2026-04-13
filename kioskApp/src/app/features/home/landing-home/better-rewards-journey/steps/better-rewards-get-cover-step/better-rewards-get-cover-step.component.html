@@ -1,5 +1,31 @@
-<section class="journey-step">
-  <h2>Get cover</h2>
-  <p>Continue to move to the next step in your Better Rewards journey.</p>
-  <button type="button" class="continue-button" mat-flat-button (click)="continue()">Continue</button>
+<section class="get-cover-step">
+  <div class="get-cover-step__content">
+    <div class="get-cover-step__illustration" aria-hidden="true">
+      <img class="get-cover-step__illustration-image" src="/images/Group.png" alt="" />
+    </div>
+
+    <h2>Double your Base Discount with<br />Dis-Chem Insurance</h2>
+    <p class="get-cover-step__copy">
+      Let's say you pay R 150 in premiums on <strong>Dis-Chem life<br />cover</strong>, your Base Discount jumps to 20% or higher,
+      saving you more with every shop
+    </p>
+
+    <div class="get-cover-step__note">
+      <div class="get-cover-step__note-icon" aria-hidden="true">+</div>
+      <p>
+        And why stop there? Your Base Discount can go up to 100% if
+        you get more Dis-Chem Cover and Insurance products. Ask an
+        in-store financial advisor to help you decide
+      </p>
+    </div>
+
+    <div class="get-cover-step__actions">
+      <button type="button" class="get-cover-step__action get-cover-step__action--primary" mat-flat-button (click)="saveWithInsurance()">
+        Save {{ insuranceSaveLabel() }} more with Insurance
+      </button>
+      <button type="button" class="get-cover-step__action get-cover-step__action--secondary" mat-stroked-button (click)="skipForNow()">
+        Skip for now
+      </button>
+    </div>
+  </div>
 </section>
